@@ -241,3 +241,85 @@ ${sunburst(c, c, 60, 255, 144, { opacity: 0.14 })}
 </svg>`);
   outWeb('wave.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 14" width="44" height="14">${waveBand(0, 44, 7, 4.2, { period: 22, width: 0.8 })}</svg>`);
 };
+
+/* ── anatomy plate + hat stamps ── */
+module.exports.plates = function plates(out, spider, spiderGroup, HATS) {
+  // anatomy of a night shift
+  {
+    const W = 1200, H = 720, k = 1.3;
+    const ox = 600 - 200 * k, oy = 372 - 150 * k;
+    const P = (x, y) => [ox + x * k, oy + y * k];
+    const callouts = [
+      ['a_eye', 'L', 150, P(189, 141)],
+      ['a_knee', 'L', 420, P(66, 127)],
+      ['a_rivet', 'L', 610, P(66.5, 262)],
+      ['a_tri', 'R', 150, P(200, 74)],
+      ['a_lid', 'R', 420, P(222, 172)],
+      ['a_shadow', 'R', 610, P(345, 322)],
+    ];
+    const maxW = 300;
+    const marks = callouts.map(([key, side, y, [tx, ty]]) => {
+      const sc = Math.min(1, maxW / L[key].w);
+      const w = L[key].w * sc;
+      const x0 = side === 'L' ? 70 : W - 70 - w;
+      const lx = side === 'L' ? x0 + w + 12 : x0 - 12;
+      const ex = side === 'L' ? lx + 40 : lx - 40;
+      return `${word(key, x0, y, { scale: sc, fill: INK })}
+<polyline points="${lx},${y - 7} ${ex},${y - 7} ${tx.toFixed(1)},${ty.toFixed(1)}" fill="none" stroke="${INK}" stroke-width="1.1"/>
+<circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="6" fill="none" stroke="${SEAL}" stroke-width="2"/><circle cx="${tx.toFixed(1)}" cy="${ty.toFixed(1)}" r="2" fill="${SEAL}"/>`;
+    });
+    out('anatomy.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Anatomy of PRovidence: one eye that never closes, the triangle, the dark lid, white knees, rivets, the shadow">
+<style>@keyframes an-leg{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}</style>
+${paperDefs('an', W, H)}
+<g clip-path="url(#an-clip)">
+<rect width="${W}" height="${H}" fill="url(#an-paper)"/>
+<rect width="${W}" height="${H}" fill="url(#an-lines)"/>
+${frame(W, H)}
+${rosette(600, 372, 250, { layers: 3, lobes: 41, seed: 10, opacity: 0.22, width: 0.5 })}
+${sunburst(600, 372, 120, 300, 96, { opacity: 0.08 })}
+<circle cx="600" cy="372" r="215" fill="url(#an-glow)"/>
+${word('anatomy', 600, 92, { align: 'middle', fill: INK })}
+<line x1="420" y1="108" x2="780" y2="108" stroke="${INK}" stroke-width=".8"/>
+<g transform="translate(${ox} ${oy}) scale(${k})">${spiderGroup({ id: 'an', animated: true })}</g>
+${marks.join('\n')}
+${word('fig', 600, 676, { align: 'middle', fill: NOTE })}
+</g>
+<rect x="1" y="1" width="${W - 2}" height="${H - 2}" rx="22" fill="none" stroke="${INK}" stroke-width="2"/>
+</svg>`);
+  }
+
+  // the wardrobe as postage stamps
+  {
+    const hats = Object.keys(HATS).filter((h) => h !== 'none');
+    const cols = 3, sw = 330, sh = 380, gap = 34, top = 120;
+    const W = cols * sw + (cols + 1) * gap, rows = Math.ceil(hats.length / cols), H = top + rows * sh + rows * gap + 10;
+    const BG = '#13231a';
+    const stamps = hats.map((h, i) => {
+      const x = gap + (i % cols) * (sw + gap), y = top + Math.floor(i / cols) * (sh + gap);
+      let perf = '';
+      for (let px = 10; px < sw; px += 20) perf += `<circle cx="${x + px}" cy="${y}" r="7" fill="${BG}"/><circle cx="${x + px}" cy="${y + sh}" r="7" fill="${BG}"/>`;
+      for (let py = 10; py < sh; py += 20) perf += `<circle cx="${x}" cy="${y + py}" r="7" fill="${BG}"/><circle cx="${x + sw}" cy="${y + py}" r="7" fill="${BG}"/>`;
+      const inner = spider({ hat: h, id: `st${i}`, animated: true, label: false }).replace(/^<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+      const ink = i % 3 === 1 ? SEAL : NOTE;
+      return `<g>
+<rect x="${x}" y="${y}" width="${sw}" height="${sh}" fill="url(#hw-paper)"/>
+<rect x="${x}" y="${y}" width="${sw}" height="${sh}" fill="url(#hw-lines)"/>
+${perf}
+<rect x="${x + 18}" y="${y + 18}" width="${sw - 36}" height="${sh - 36}" fill="none" stroke="${ink}" stroke-width="1.6"/>
+<rect x="${x + 24}" y="${y + 24}" width="${sw - 48}" height="${sh - 48}" fill="none" stroke="${ink}" stroke-width=".6"/>
+${rosette(x + sw / 2, y + 168, 120, { layers: 2, lobes: 23 + i * 2, seed: 5 + (i % 3), opacity: 0.22, width: 0.45, color: ink })}
+<g transform="translate(${x + sw / 2 - 200 * 0.66} ${y + 74}) scale(.66)">${inner}</g>
+${word('n1337', x + 34, y + 58, { scale: 0.42, fill: ink })}
+${word(`h_${h}`, x + sw / 2, y + sh - 42, { align: 'middle', fill: INK, scale: Math.min(1, (sw - 70) / L[`h_${h}`].w) })}
+</g>`;
+    });
+    out('hat-wall.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="The wardrobe: PRovidence in nine hats, printed as postage stamps">
+<style>@keyframes ${hats.map((_, i) => `st${i}-leg`).join('{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}@keyframes ')}{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}</style>
+${paperDefs('hw', W, H)}
+<rect width="${W}" height="${H}" rx="22" fill="${BG}"/>
+<rect width="${W}" height="${H}" rx="22" fill="url(#hw-lines)" opacity=".5"/>
+${word('wardrobe', W / 2, 74, { align: 'middle', fill: '#e6ece2' })}
+${stamps.join('\n')}
+</svg>`);
+  }
+};

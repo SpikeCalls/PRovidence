@@ -30,6 +30,20 @@ TEXT = {
     "serial":  ("mono", "PR 0107 1337 A", 20, 2),
     "one":     ("display", "ONE EYE", 15, 6),
     "eight":   ("display", "EIGHT LEGS", 15, 6),
+    "anatomy": ("caps", "ANATOMY OF A NIGHT SHIFT", 22, 6),
+    "a_eye":   ("italic", "one eye that never closes", 21, 0),
+    "a_tri":   ("italic", "the triangle: every PR it opens", 21, 0),
+    "a_lid":   ("italic", "the dark lid: what it hasn't seen yet", 21, 0),
+    "a_knee":  ("italic", "white knees: where it changes its mind", 21, 0),
+    "a_rivet": ("italic", "rivets: one per reproduced bug", 21, 0),
+    "a_shadow":("italic", "the shadow: it works at night", 21, 0),
+    "fig":     ("caps", "FIG. 1 \u2014 PRovidence, life size", 14, 3),
+    "h_cap": ("caps", "NIGHT-SHIFT CAP", 15, 4), "h_beanie": ("caps", "HACKER BEANIE", 15, 4),
+    "h_crown": ("caps", "MERGE KING", 15, 4), "h_wizard": ("caps", "REGEX WIZARD", 15, 4),
+    "h_headphones": ("caps", "LO-FI MODE", 15, 4), "h_hardhat": ("caps", "PROD SAFETY HELMET", 15, 4),
+    "h_party": ("caps", "SHIP-IT PARTY HAT", 15, 4), "h_tophat": ("caps", "THE MAINTAINER", 15, 4),
+    "h_grad": ("caps", "PHD IN BUG HUNTING", 15, 4),
+    "wardrobe": ("caps", "THE WARDROBE \u00b7 NINE STAMPS, ONE SPIDER", 22, 6),
 }
 
 def shape(font_path, text, size, tracking):

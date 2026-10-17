@@ -46,6 +46,8 @@ That one line made it better than half the engineers I've worked with.
 
 <br clear="right">
 
+<img src="assets/anatomy.svg" width="100%" alt="Anatomy of a night shift: one eye that never closes, the triangle, the dark lid, white knees, rivets, the shadow">
+
 <img src="assets/silk.svg" width="100%" alt="">
 
 ## ⚡ 60-second start
@@ -201,9 +203,9 @@ Hard limits it can **never** override. Not a prompt. A `throw`.
 
 ## 🎩 The wardrobe
 
-A hat for every leg, plus one spare. GitHub-only merch: try them on in your terminal with `providence hat crown` or `providence night --hat wizard`.
+A hat for every leg, plus one spare, printed as a sheet of stamps. GitHub-only merch: try them on in your terminal with `providence hat crown` or `providence night --hat wizard`.
 
-<img src="assets/hat-wall.svg" width="100%" alt="PRovidence wearing nine hats">
+<img src="assets/hat-wall.svg" width="100%" alt="The wardrobe: PRovidence in nine hats, printed as postage stamps">
 
 | | | |
 |---|---|---|
