@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -50 400 418" width="400" height="418" role="img" aria-label="PRovidence wearing Ship-It Party Hat">
+<defs>
+  <radialGradient id="party-iris" cx=".38" cy=".35" r=".75">
+    <stop offset="0" stop-color="#9fe6a0"/><stop offset=".45" stop-color="#3fae55"/><stop offset="1" stop-color="#145a27"/>
+  </radialGradient>
+</defs><style>@keyframes party-leg{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}@keyframes party-bob{from{transform:translateY(0)}to{transform:translateY(-6px)}}.party-all{animation:party-bob 1.6s ease-in-out infinite alternate}</style>
+<rect x="0" y="-50" width="400" height="418" rx="24" fill="#0d1117"/>
+<g class="party-all">
+<g transform="translate(7 9)"><polyline style="transform-origin:223.0px 103px;animation:party-leg 1s ease-in-out 0.00s infinite alternate" points="223.0,103.0 254.0,12.0 362.0,44.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:234.0px 128px;animation:party-leg 1s ease-in-out 0.17s infinite alternate" points="234.0,128.0 316.0,72.0 372.0,150.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:242.0px 151px;animation:party-leg 1s ease-in-out 0.34s infinite alternate" points="242.0,151.0 329.0,108.0 379.0,199.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:247.0px 175px;animation:party-leg 1s ease-in-out 0.51s infinite alternate" points="247.0,175.0 338.0,194.0 345.0,293.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:177.0px 103px;animation:party-leg 1s ease-in-out 0.09s infinite alternate" points="177.0,103.0 146.0,12.0 38.0,44.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:166.0px 128px;animation:party-leg 1s ease-in-out 0.26s infinite alternate" points="166.0,128.0 84.0,72.0 28.0,150.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:158.0px 151px;animation:party-leg 1s ease-in-out 0.43s infinite alternate" points="158.0,151.0 71.0,108.0 21.0,199.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
+<polyline style="transform-origin:153.0px 175px;animation:party-leg 1s ease-in-out 0.60s infinite alternate" points="153.0,175.0 62.0,194.0 55.0,293.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/></g>
+<g class="leg" style="transform-origin:223.0px 103px;animation:party-leg 1s ease-in-out 0.00s infinite alternate">
+  <polyline points="223.0,103.0 254.0,12.0 362.0,44.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="223.0,103.0 254.0,12.0 359.1,43.1" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="224.6,98.5 254.0,12.0 353.9,41.6" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="232.3" cy="75.7" r="1.9" fill="#111111"/><circle cx="295.0" cy="24.2" r="1.9" fill="#111111"/><circle cx="242.2" cy="46.6" r="1.9" fill="#111111"/><circle cx="329.6" cy="34.4" r="1.9" fill="#111111"/>
+  <circle cx="254" cy="12" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:234.0px 128px;animation:party-leg 1s ease-in-out 0.17s infinite alternate">
+  <polyline points="234.0,128.0 316.0,72.0 372.0,150.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="234.0,128.0 316.0,72.0 370.3,147.6" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="238.1,125.2 316.0,72.0 367.5,143.8" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="258.6" cy="111.2" r="1.9" fill="#111111"/><circle cx="337.3" cy="101.6" r="1.9" fill="#111111"/><circle cx="284.8" cy="93.3" r="1.9" fill="#111111"/><circle cx="355.2" cy="126.6" r="1.9" fill="#111111"/>
+  <circle cx="316" cy="72" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:242.0px 151px;animation:party-leg 1s ease-in-out 0.34s infinite alternate">
+  <polyline points="242.0,151.0 329.0,108.0 379.0,199.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="242.0,151.0 329.0,108.0 377.6,196.4" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="246.3,148.8 329.0,108.0 375.1,192.0" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="268.1" cy="138.1" r="1.9" fill="#111111"/><circle cx="348.0" cy="142.6" r="1.9" fill="#111111"/><circle cx="295.9" cy="124.3" r="1.9" fill="#111111"/><circle cx="364.0" cy="171.7" r="1.9" fill="#111111"/>
+  <circle cx="329" cy="108" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:247.0px 175px;animation:party-leg 1s ease-in-out 0.51s infinite alternate">
+  <polyline points="247.0,175.0 338.0,194.0 345.0,293.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="247.0,175.0 338.0,194.0 344.8,290.0" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="251.6,175.9 338.0,194.0 344.4,285.2" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="274.3" cy="180.7" r="1.9" fill="#111111"/><circle cx="340.7" cy="231.6" r="1.9" fill="#111111"/><circle cx="303.4" cy="186.8" r="1.9" fill="#111111"/><circle cx="342.9" cy="263.3" r="1.9" fill="#111111"/>
+  <circle cx="338" cy="194" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:177.0px 103px;animation:party-leg 1s ease-in-out 0.09s infinite alternate">
+  <polyline points="177.0,103.0 146.0,12.0 38.0,44.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="177.0,103.0 146.0,12.0 40.9,43.1" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="175.4,98.5 146.0,12.0 46.1,41.6" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="167.7" cy="75.7" r="1.9" fill="#111111"/><circle cx="105.0" cy="24.2" r="1.9" fill="#111111"/><circle cx="157.8" cy="46.6" r="1.9" fill="#111111"/><circle cx="70.4" cy="34.4" r="1.9" fill="#111111"/>
+  <circle cx="146" cy="12" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:166.0px 128px;animation:party-leg 1s ease-in-out 0.26s infinite alternate">
+  <polyline points="166.0,128.0 84.0,72.0 28.0,150.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="166.0,128.0 84.0,72.0 29.7,147.6" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="161.9,125.2 84.0,72.0 32.5,143.8" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="141.4" cy="111.2" r="1.9" fill="#111111"/><circle cx="62.7" cy="101.6" r="1.9" fill="#111111"/><circle cx="115.2" cy="93.3" r="1.9" fill="#111111"/><circle cx="44.8" cy="126.6" r="1.9" fill="#111111"/>
+  <circle cx="84" cy="72" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:158.0px 151px;animation:party-leg 1s ease-in-out 0.43s infinite alternate">
+  <polyline points="158.0,151.0 71.0,108.0 21.0,199.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="158.0,151.0 71.0,108.0 22.4,196.4" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="153.7,148.8 71.0,108.0 24.9,192.0" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="131.9" cy="138.1" r="1.9" fill="#111111"/><circle cx="52.0" cy="142.6" r="1.9" fill="#111111"/><circle cx="104.1" cy="124.3" r="1.9" fill="#111111"/><circle cx="36.0" cy="171.7" r="1.9" fill="#111111"/>
+  <circle cx="71" cy="108" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+<g class="leg" style="transform-origin:153.0px 175px;animation:party-leg 1s ease-in-out 0.60s infinite alternate">
+  <polyline points="153.0,175.0 62.0,194.0 55.0,293.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
+  <polyline points="153.0,175.0 62.0,194.0 55.2,290.0" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
+  <polyline points="148.4,175.9 62.0,194.0 55.6,285.2" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <circle cx="125.7" cy="180.7" r="1.9" fill="#111111"/><circle cx="59.3" cy="231.6" r="1.9" fill="#111111"/><circle cx="96.6" cy="186.8" r="1.9" fill="#111111"/><circle cx="57.1" cy="263.3" r="1.9" fill="#111111"/>
+  <circle cx="62" cy="194" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+</g>
+
+<g class="body">
+  <polygon points="200.0,50.0 287.0,204.0 113.0,204.0" fill="rgba(0,0,0,.28)" transform="translate(7 9)" stroke="rgba(0,0,0,.28)" stroke-width="7" stroke-linejoin="round"/>
+  <polygon points="200.0,50.0 287.0,204.0 113.0,204.0" fill="#eceeef" stroke="#111111" stroke-width="8" stroke-linejoin="round"/>
+  <clipPath id="party-in"><polygon points="200,74 133,192 267,192"/></clipPath>
+  <g clip-path="url(#party-in)"><line x1="200" y1="150" x2="124" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="133" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="142" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="151" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="160" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="169" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="178" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="187" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="196" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="205" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="214" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="223" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="232" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="241" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="250" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="259" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="268" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="176" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="184" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="192" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="200" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="208" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="216" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="224" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/></g>
+  <polygon points="200,74 133,192 267,192" fill="none" stroke="#111111" stroke-width="2.4" stroke-linejoin="round"/>
+  <!-- the eye that never closes -->
+  <path d="M126 150 Q200 96 274 150 Q200 202 126 150 Z" fill="#ffffff" stroke="#111111" stroke-width="5.5" stroke-linejoin="round"/>
+  <g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;10 1;10 1;-3 -1;-3 -1;0 0" keyTimes="0;.3;.38;.6;.68;.9;1" dur="7s" repeatCount="indefinite"/>
+    <circle cx="192" cy="150" r="23" fill="url(#party-iris)" stroke="#0a3317" stroke-width="2.5"/>
+    <circle cx="192" cy="150" r="14.5" fill="none" stroke="#1d6b31" stroke-width="1.2" opacity=".7"/>
+    <circle cx="192" cy="150" r="9.5" fill="#06150b"/>
+    <circle cx="185" cy="143" r="4.8" fill="#ffffff"/>
+    <circle cx="198" cy="157" r="1.8" fill="#ffffff" opacity=".85"/>
+  </g>
+  <path d="M126 150 Q200 96 274 150 Q200 116 126 150 Z" fill="#111111"/>
+  <path d="M126 150 Q200 202 274 150 Q200 186 126 150 Z" fill="#111111"/>
+</g>
+<g transform="translate(0 10)"><g>
+  <path d="M174 46 L200 -30 L226 46 Z" fill="#a371f7" stroke="#6e40c9" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M186 12 L214 12 M180 30 L220 30 M192 -6 L208 -6" stroke="#39d353" stroke-width="5"/>
+  <circle cx="200" cy="-34" r="7" fill="#f2cc60"/>
+  <rect x="150" y="-10" width="5" height="9" fill="#39d353" transform="rotate(25 152 -6)"/>
+  <rect x="240" y="0" width="5" height="9" fill="#f2cc60" transform="rotate(-30 242 4)"/>
+  <rect x="232" y="-24" width="5" height="9" fill="#ff7b72" transform="rotate(15 234 -20)"/>
+</g></g>
+</g>
+<text x="200" y="342" text-anchor="middle" font-family="-apple-system,Segoe UI,Helvetica,Arial,sans-serif" font-weight="700" font-size="20" fill="#39d353">Ship-It Party Hat</text>
+<text x="200" y="362" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="12" fill="#8b949e">All checks green. Confetti authorized.</text>
+</svg>

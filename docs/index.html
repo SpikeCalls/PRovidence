@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRovidence — 8 legs, 1 eye that never closes</title>
+<meta name="description" content="A spider that crawls your repo at night, reproduces every bug before touching it, and farms a second brain. It will also steal the letters off this page.">
+<meta property="og:title" content="PRovidence — the spider that lives in your GitHub">
+<meta property="og:description" content="Reproduce first. Then fix. Then ask: what did I not see?">
+<meta property="og:image" content="https://spikecalls.github.io/PRovidence/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/sprites/none.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1117;--bg2:#010409;--panel:#161b22;--line:#30363d;--fg:#e6edf3;--mute:#8b949e;--g:#39d353;--g2:#26a641;--g3:#0e4429;--p:#a371f7;--y:#f2cc60;--r:#ff7b72;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg2);color:var(--fg);font-family:Inter,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;overflow-x:hidden}
+a{color:var(--g);text-decoration:none}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(1200px 600px at 80% -10%,rgba(57,211,83,.14),transparent 60%),radial-gradient(900px 500px at -10% 30%,rgba(163,113,247,.08),transparent 60%);pointer-events:none;z-index:0}
+.dots{position:fixed;inset:0;background-image:radial-gradient(#21262d 1px,transparent 1px);background-size:24px 24px;opacity:.6;pointer-events:none;z-index:0}
+main,nav,footer{position:relative;z-index:1}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;max-width:1120px;margin:0 auto}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:-.02em;color:var(--fg)}
+.brand img{width:34px;height:34px}
+nav .links{display:flex;gap:22px;font-size:14px}
+nav .links a{color:var(--mute)} nav .links a:hover{color:var(--fg)}
+.live{font-family:var(--mono);font-size:13px;color:var(--mute);display:flex;gap:14px;align-items:center;margin-top:40px}
+.live b{color:var(--r);font-weight:700}
+.live b::before{content:"● ";animation:blink 1.2s infinite}
+@keyframes blink{50%{opacity:.2}}
+h1{font-size:clamp(56px,13vw,150px);line-height:.9;margin:18px 0 10px;font-weight:900;letter-spacing:-.05em}
+h1 .pr{color:#f0f6fc}
+h1 .rest{color:var(--g);text-shadow:0 0 40px rgba(57,211,83,.35)}
+.steal span{display:inline-block;transition:transform .3s,opacity .3s}
+.steal span.gone{opacity:0;transform:translateY(-20px) scale(.6)}
+.steal span.back{animation:pop .5s}
+@keyframes pop{0%{transform:scale(1.6);color:var(--y)}100%{transform:scale(1)}}
+.tag{font-size:clamp(20px,3vw,28px);color:#c9d1d9;margin:0}
+.tag2{font-size:clamp(17px,2.4vw,24px);color:var(--mute);margin:8px 0 0}
+.tag2 em{color:#7ee787;font-style:normal;font-weight:700}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin:34px 0 0}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:12px;font-weight:700;font-size:15px;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer;font-family:inherit}
+.btn.go{background:var(--g);color:#04140a;border-color:var(--g);box-shadow:0 0 30px rgba(57,211,83,.35)}
+.btn.go:hover{transform:translateY(-1px)}
+.btn code{font-family:var(--mono);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:48px 0 0}
+.stat{background:rgba(22,27,34,.7);border:1px solid var(--line);border-radius:14px;padding:16px;backdrop-filter:blur(6px)}
+.stat .n{font-size:30px;font-weight:900;color:var(--g);font-variant-numeric:tabular-nums}
+.stat .n.b{color:#58a6ff}.stat .n.p{color:var(--p)}.stat .n.y{color:var(--y)}
+.stat .l{font-size:12px;color:var(--mute);margin-top:4px;font-family:var(--mono)}
+section{padding:90px 0 0}
+.kicker{font-family:var(--mono);color:var(--g);font-size:14px}
+h2{font-size:clamp(32px,5vw,52px);letter-spacing:-.03em;margin:10px 0 18px;font-weight:900}
+h2 mark{background:rgba(57,211,83,.16);color:var(--g);padding:0 .15em;border-radius:8px}
+.term{background:#010409;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.term .bar{display:flex;gap:8px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);background:#0d1117;font-family:var(--mono);font-size:12px;color:var(--mute)}
+.term .bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+.term pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:14px;line-height:1.75;min-height:290px;white-space:pre-wrap;color:#c9d1d9}
+.t-d{color:#484f58}.t-g{color:#7ee787}.t-y{color:var(--y)}.t-p{color:#d2a8ff}.t-r{color:var(--r)}.t-b{color:#79c0ff}
+.cursor{display:inline-block;width:8px;height:16px;background:var(--g);vertical-align:-3px;animation:blink 1s infinite}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{background:rgba(22,27,34,.75);border:1px solid var(--line);border-radius:16px;padding:22px;position:relative;overflow:hidden}
+.card:hover{border-color:var(--g2)}
+.card .k{font-family:var(--mono);font-size:13px;color:var(--g)}
+.card h3{margin:8px 0 8px;font-size:20px}
+.card p{margin:0;color:var(--mute);font-size:15px;line-height:1.55}
+.card pre{font-family:var(--mono);font-size:12px;background:#010409;border:1px solid var(--line);border-radius:10px;padding:12px;color:#c9d1d9;overflow:auto;margin:12px 0 0}
+.quote{text-align:center;padding:110px 0 40px}
+.quote p{font-size:clamp(34px,6vw,72px);font-weight:900;letter-spacing:-.04em;margin:0}
+.quote small{display:block;color:var(--mute);font-family:var(--mono);margin-top:16px}
+.webimg{width:100%;border-radius:18px;border:1px solid var(--line)}
+footer{padding:60px 20px;text-align:center;color:var(--mute);font-size:14px}
+footer b{color:var(--fg)}
+/* the spider */
+#spider{position:absolute;left:0;top:0;width:120px;height:120px;z-index:50;cursor:grab;will-change:transform;filter:drop-shadow(0 10px 20px rgba(0,0,0,.6))}
+#spider img{width:100%;height:100%;pointer-events:none}
+#carry{position:absolute;z-index:49;font-weight:900;color:var(--g);font-size:44px;pointer-events:none;text-shadow:0 0 20px rgba(57,211,83,.6);display:none}
+#silk{position:absolute;left:0;top:0;pointer-events:none;z-index:40;overflow:visible}
+#jar{position:fixed;right:16px;bottom:16px;z-index:60;background:rgba(13,17,23,.92);border:1px solid var(--line);border-radius:14px;padding:10px 14px;font-family:var(--mono);font-size:12px;color:var(--mute);cursor:pointer;max-width:280px;backdrop-filter:blur(8px)}
+#jar b{color:var(--g);letter-spacing:.2em}
+#bubble{position:absolute;z-index:55;background:#f0f6fc;color:#0d1117;font-weight:700;font-size:13px;padding:7px 11px;border-radius:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s}
+#bubble.on{opacity:1}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}nav .links a.hide{display:none}#spider{width:80px;height:80px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="dots"></div>
+<nav>
+  <a class="brand" href="#"><img src="assets/sprites/none.svg" alt="">PRovidence</a>
+  <div class="links">
+    <a class="hide" href="#how">How it works</a>
+        <a href="quest/">▶ Quest</a>
+    <a href="https://github.com/SpikeCalls/PRovidence">GitHub ★</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <div class="live"><b>LIVE</b><span id="clock">01:07:00 AM</span><span>night shift · providence/watch</span></div>
+  <h1 class="steal"><span class="pr">PR</span><span class="rest">ovidence</span></h1>
+  <p class="tag steal">8 legs. 1 eye that never closes.</p>
+  <p class="tag2">It doesn't touch anything it hasn't <em>reproduced first</em>.</p>
+  <div class="cta">
+    <a class="btn go" href="quest/">▶ Play PRovidence Quest</a>
+    <button class="btn" id="copy"><code>npx github:SpikeCalls/PRovidence night</code> <span id="copied">⧉</span></button>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="n b" data-to="61204">0</div><div class="l">files read</div></div>
+    <div class="stat"><div class="n y" data-to="23">0</div><div class="l">bugs found</div></div>
+    <div class="stat"><div class="n" data-to="9">0</div><div class="l">fixed (reproduced)</div></div>
+    <div class="stat"><div class="n p" data-to="14">0</div><div class="l">left with evidence</div></div>
+    <div class="stat"><div class="n" data-to="1337">0</div><div class="l">commits by sunrise</div></div>
+  </div>
+  <p style="font-family:var(--mono);font-size:12px;color:#484f58;margin:10px 0 0">↑ the night from the story. run it on your repo to get your own numbers.</p>
+
+  <section>
+    <div class="kicker">&lt;night_shift&gt;</div>
+    <h2 class="steal">Commits before you <mark>roll over</mark>.</h2>
+    <div class="term">
+      <div class="bar"><i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>&nbsp; providence — activity.log</div>
+      <pre id="log"></pre>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="kicker">&lt;crawl_layer&gt;</div>
+    <h2 class="steal">Eight legs. <mark>Six rules.</mark> One eye.</h2>
+    <div class="grid">
+      <div class="card"><div class="k">01 · crawl_layer</div><h3>Maps before it touches</h3><p>Walks every repo, every file, every language. Writes nothing. Builds a map first.</p></div>
+      <div class="card"><div class="k">02 · fix_protocol</div><h3>Reproduce first</h3><p>A fix is only applied if the check fails <i>right now</i>. Then it re-runs the check. Still failing? It rolls back.</p></div>
+      <div class="card"><div class="k">03 · finding_schema</div><h3>Every bug is a typed record</h3><pre>{ "kind": "leaked-secret",
+  "severity": "critical",
+  "confidence": 0.9,
+  "blast_radius": ["src/env.ts"],
+  "status": "reproduced" }</pre></div>
+      <div class="card"><div class="k">04 · second_brain</div><h3>Four legs code. Four farm.</h3><p>Every finding becomes a note. Every note links to its file and module. Opens as a graph in Obsidian.</p></div>
+      <div class="card"><div class="k">05 · safety_web</div><h3>Hard limits in code</h3><p>Never pushes to main. Never touches secrets. Never deletes. Never rewrites history. Not a prompt — a <code>throw</code>.</p></div>
+      <div class="card"><div class="k">06 · morning_report</div><h3>One-minute summary</h3><p>Fixed, left with evidence, and the line that matters most: <b style="color:var(--fg)">"What did I not see?"</b></p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">&lt;safety_web&gt;</div>
+    <h2 class="steal">Hard limits it can <mark>never override</mark>.</h2>
+    <img class="webimg" src="assets/safety-web.svg" alt="The safety web">
+  </section>
+
+  <div class="quote"><p class="steal">What did I not see?</p><small>— the last line of every morning report</small></div>
+</main>
+
+<footer>Made by <b>Spike House</b> · <a href="https://github.com/SpikeCalls/PRovidence">github.com/SpikeCalls/PRovidence</a> · MIT</footer>
+
+<svg id="silk"><path id="silkpath" fill="none" stroke="#c9d1d9" stroke-opacity=".35" stroke-width="1.2" stroke-dasharray="3 4"/></svg>
+<div id="spider" title="click me"><img id="spimg" src="assets/sprites/none.svg" alt="PRovidence the spider"></div>
+<div id="carry"></div>
+<div id="bubble"></div>
+<div id="jar" title="click to make it give everything back">🕸 letters in silk: <b id="jarl">—</b></div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* clock that pretends it's always the night shift */
+  let t = 67 * 60;
+  setInterval(() => { t = (t + 7) % (6 * 3600); const h = Math.floor(t / 3600), m = Math.floor(t / 60) % 60, s = t % 60;
+    $('#clock').textContent = `${String(h || 12).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')} AM`; }, 1000);
+
+  /* copy */
+  $('#copy').onclick = () => { navigator.clipboard?.writeText('npx github:SpikeCalls/PRovidence night'); $('#copied').textContent = '✓'; setTimeout(() => ($('#copied').textContent = '⧉'), 1400); };
+
+  /* counters */
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (!e.isIntersecting) return; io.unobserve(e.target);
+    const to = +e.target.dataset.to, t0 = performance.now();
+    const step = (now) => { const k = Math.min(1, (now - t0) / 1600); e.target.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))).toLocaleString('en-US'); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step); }), { threshold: .4 });
+  document.querySelectorAll('[data-to]').forEach((n) => io.observe(n));
+
+  /* activity log */
+  const LOG = [
+    ['01:07:12', 'g', '$ providence --watch --all-repos --night-shift'],
+    ['01:07:13', 'd', 'eye.open() → night mode engaged'],
+    ['01:19:46', 'b', 'crawl  nightshift/kernel-weaver · 4,812 files'],
+    ['01:52:25', 'b', 'crawl  nightshift/pixel-loom · 19,316 files'],
+    ['02:28:48', 'y', 'repro  #1187 deadlock at exactly 03:00 → failing test ✓'],
+    ['02:41:03', 'g', 'fix    src/sched/scheduler.rs · 2,048 tests green'],
+    ['03:07:30', 'r', 'skip   .env · safety_web: never-touch-secrets'],
+    ['03:47:56', 'p', 'brain  142 notes · 336 links'],
+    ['04:29:44', 'g', 'pr     #1337 "Night shift: 9 fixes, 0 regrets" · waiting for green'],
+    ['05:12:42', 'y', 'wait   operator approval required to merge'],
+    ['05:56:41', 'p', 'ask    "What did I not see?"'],
+  ];
+  const pre = $('#log'); let li = 0, ci = 0;
+  function type() {
+    if (li >= LOG.length) { pre.insertAdjacentHTML('beforeend', '<span class="cursor"></span>'); return; }
+    const [ts, c, msg] = LOG[li];
+    if (ci === 0) pre.insertAdjacentHTML('beforeend', `<span class="t-d">[${ts}]</span> <span class="t-${c}" id="l${li}"></span>`);
+    const el = document.getElementById('l' + li);
+    el.textContent = msg.slice(0, ++ci);
+    if (ci >= msg.length) { pre.insertAdjacentHTML('beforeend', '\n'); li++; ci = 0; setTimeout(type, 260); } else setTimeout(type, reduce ? 0 : 14);
+  }
+  new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); type(); } }).observe(pre);
+
+  /* split stealable text into letters */
+  document.querySelectorAll('.steal').forEach((el) => {
+    const walk = (node) => {
+      [...node.childNodes].forEach((n) => {
+        if (n.nodeType === 3) {
+          const frag = document.createDocumentFragment();
+          for (const ch of n.textContent) { if (!ch.trim()) { frag.appendChild(document.createTextNode(ch)); continue; } const s = document.createElement('span'); s.textContent = ch; s.className = 'ltr'; frag.appendChild(s); }
+          n.replaceWith(frag);
+        } else if (n.nodeType === 1 && !n.classList.contains('ltr')) walk(n);
+      });
+    };
+    walk(el);
+  });
+
+  /* ───── the spider ───── */
+  const sp = $('#spider'), carry = $('#carry'), bubble = $('#bubble'), silkPath = $('#silkpath'), silk = $('#silk');
+  const size = () => sp.offsetWidth;
+  let x = innerWidth - 200, y = 120, tx = x, ty = y, state = 'idle', target = null, held = null, trail = [], stolen = [], wait = 1.5, last = performance.now(), tilt = 0;
+  const say = (msg) => { bubble.textContent = msg; bubble.classList.add('on'); clearTimeout(say.t); say.t = setTimeout(() => bubble.classList.remove('on'), 2000); };
+  const pagePos = (el) => { const r = el.getBoundingClientRect(); return { x: r.left + scrollX + r.width / 2, y: r.top + scrollY + r.height / 2, h: r.height }; };
+  const jarLabel = () => { $('#jarl').textContent = stolen.length ? stolen.map((s) => s.textContent).join(' ') : '—'; };
+
+  function pickLetter() {
+    const vis = [...document.querySelectorAll('.ltr:not(.gone)')].filter((l) => { const r = l.getBoundingClientRect(); return r.top > 60 && r.bottom < innerHeight - 40; });
+    return vis.length ? vis[Math.floor(Math.random() * vis.length)] : null;
+  }
+  function goTo(px, py) { tx = px; ty = py; }
+
+  function giveBack() {
+    if (!stolen.length) { say('nothing to give back. clean web.'); return; }
+    stolen.forEach((l, i) => setTimeout(() => { l.classList.remove('gone'); l.classList.add('back'); setTimeout(() => l.classList.remove('back'), 600); }, i * 90));
+    say(`returned ${stolen.length}. rule #3: never delete.`);
+    stolen = []; jarLabel();
+  }
+  $('#jar').onclick = giveBack;
+
+  sp.addEventListener('click', () => { say(['hi. I reproduced you.', 'what did I not see?', '8 legs, 0 regrets', 'don\'t push to main', 'nice commit graph'][Math.floor(Math.random() * 5)]); wait = 1.2; state = 'idle'; });
+  document.addEventListener('click', (e) => {
+    const l = e.target.closest && e.target.closest('.ltr');
+    if (l && !l.classList.contains('gone') && state !== 'carry') { target = l; state = 'hunt'; say('oh, that one?'); }
+  });
+
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const s = size();
+    if (state === 'idle') {
+      wait -= dt;
+      if (wait <= 0) {
+        if (stolen.length >= 7) { giveBack(); wait = 3; }
+        else { target = pickLetter(); if (target) state = 'hunt'; else { goTo(scrollX + 80 + Math.random() * (innerWidth - 240), scrollY + 100 + Math.random() * (innerHeight - 260)); state = 'wander'; } }
+      }
+    }
+    if (state === 'hunt' && target) { const p = pagePos(target); goTo(p.x - s / 2, p.y - s * 0.95); }
+    if (state === 'carry') { goTo(scrollX + innerWidth - s - 40, scrollY + innerHeight - s - 80); }
+
+    const dx = tx - x, dy = ty - y, d = Math.hypot(dx, dy), speed = (state === 'carry' ? 260 : 210) * (s / 120);
+    if (d > 2) { const k = Math.min(1, (speed * dt) / d); x += dx * k; y += dy * k; tilt += ((dx / (d || 1)) * 10 - tilt) * 0.1; }
+    else {
+      tilt *= 0.9;
+      if (state === 'hunt' && target) {
+        held = target.textContent; target.classList.add('gone'); stolen.push(target); target = null; state = 'carry';
+        carry.textContent = held; carry.style.display = 'block'; say(['mine.', 'yoink.', 'reproduced. taking it.', 'for the web.'][Math.floor(Math.random() * 4)]);
+      } else if (state === 'carry') {
+        carry.style.display = 'none'; held = null; jarLabel(); state = 'idle'; wait = 1.5 + Math.random() * 2;
+      } else if (state === 'wander') { state = 'idle'; wait = 1 + Math.random() * 2; }
+    }
+    if (reduce) { x = innerWidth - s - 30; y = scrollY + 90; }
+    sp.style.transform = `translate(${x}px,${y}px) rotate(${tilt.toFixed(1)}deg)`;
+    if (held) { carry.style.left = x + s / 2 - 12 + 'px'; carry.style.top = y + s * 0.85 + 'px'; }
+    bubble.style.left = x + s * 0.7 + 'px'; bubble.style.top = y - 18 + 'px';
+
+    // silk trail
+    trail.push([x + s / 2, y + s * 0.3]); if (trail.length > 90) trail.shift();
+    silk.setAttribute('width', document.documentElement.scrollWidth); silk.setAttribute('height', document.documentElement.scrollHeight);
+    silkPath.setAttribute('d', trail.length > 1 ? 'M' + trail.map((p) => p.map((v) => v.toFixed(0)).join(' ')).join(' L') : '');
+    requestAnimationFrame(tick);
+  }
+  setTimeout(() => say('hi. I steal letters.'), 900);
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

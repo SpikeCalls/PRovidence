@@ -1,0 +1,20 @@
+name: night-shift
+# PRovidence crawls its own web every night at 01:07 and leaves a morning report
+# in the job summary. It reads. It never pushes.
+on:
+  schedule:
+    - cron: '7 1 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  night:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: ./
+        with:
+          path: .

@@ -1,0 +1,19 @@
+{
+  "name": "providence-spider",
+  "version": "1.3.37",
+  "description": "8 legs. 1 eye that never closes. A spider that crawls your repo at night, reproduces every bug before touching it, and farms a second brain.",
+  "bin": { "providence": "bin/providence.js" },
+  "main": "src/index.js",
+  "files": ["bin", "src"],
+  "scripts": {
+    "night": "node bin/providence.js night .",
+    "test": "node --test test/*.test.js",
+    "art": "node scripts/build-art.js"
+  },
+  "engines": { "node": ">=18" },
+  "keywords": ["github", "bot", "spider", "code-review", "second-brain", "bug-hunting", "night-shift", "cli"],
+  "author": "Spike House",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/SpikeCalls/PRovidence.git" },
+  "homepage": "https://spikecalls.github.io/PRovidence/"
+}

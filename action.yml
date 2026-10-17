@@ -1,0 +1,23 @@
+name: 'PRovidence night shift'
+description: '8 legs. 1 eye that never closes. Crawls your repo, reproduces bugs before touching them, writes a morning report.'
+author: 'Spike House'
+branding:
+  icon: 'eye'
+  color: 'green'
+inputs:
+  path:
+    description: 'Directory to crawl'
+    default: '.'
+  fail-on-critical:
+    description: 'Fail the job if a critical finding is left (leaked secret, conflict marker)'
+    default: 'true'
+runs:
+  using: 'composite'
+  steps:
+    - shell: bash
+      run: |
+        FLAGS=""
+        if [ "${{ inputs.fail-on-critical }}" = "true" ]; then FLAGS="--ci"; fi
+        NO_COLOR=1 node "${{ github.action_path }}/bin/providence.js" night "${{ inputs.path }}" $FLAGS || STATUS=$?
+        cat "${{ inputs.path }}/.providence/MORNING.md" >> "$GITHUB_STEP_SUMMARY"
+        exit ${STATUS:-0}

@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>PRovidence Quest</title>
+<meta name="description" content="The level is your contribution graph. The enemies are bugs you wrote. The final boss is a merge conflict.">
+<meta property="og:title" content="PRovidence Quest — I'm the side character in my own repo now">
+<meta property="og:image" content="https://spikecalls.github.io/PRovidence/assets/social-preview.png">
+<link rel="icon" href="../assets/sprites/none.svg">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#2da44e;--g2:#39d353;--ink:#1f2328;--mute:#656d76;--line:#d0d7de;--p:#8250df;--mono:'JetBrains Mono',ui-monospace,Menlo,monospace}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#fff;color:var(--ink);font-family:Inter,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{display:block;width:100vw;height:100vh}
+.hud{position:fixed;top:14px;display:flex;gap:10px;z-index:5}
+.hud.l{left:14px}.hud.r{right:14px}
+.chip{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:12px;padding:7px 12px;box-shadow:0 4px 14px rgba(31,35,40,.06);display:flex;gap:9px;align-items:center}
+.chip small{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--mute)}
+.chip b{font-family:var(--mono);font-size:18px}
+.sq{width:16px;height:16px;border-radius:4px;background:var(--g)}
+.ring{width:16px;height:16px;border-radius:50%;border:3px solid var(--p);border-right-color:transparent}
+.lives img{width:30px;height:30px;margin-left:-4px}
+.lives img.lost{opacity:.15;filter:grayscale(1)}
+.overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:10;background:rgba(255,255,255,.72);backdrop-filter:blur(6px)}
+.overlay.hide{display:none}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 30px 80px rgba(31,35,40,.18);padding:28px;width:min(520px,92vw);text-align:center}
+.panel h1{margin:0;font-size:clamp(34px,7vw,52px);letter-spacing:-.04em;font-weight:900}
+.panel h1 span{color:var(--g)}
+.panel p{color:var(--mute);margin:8px 0 18px;line-height:1.5}
+.row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+input{font:inherit;font-family:var(--mono);padding:11px 14px;border-radius:12px;border:1px solid var(--line);width:220px;font-size:15px}
+button{font:inherit;font-weight:700;padding:11px 18px;border-radius:12px;border:1px solid var(--line);background:#f6f8fa;cursor:pointer}
+button.go{background:var(--g);border-color:var(--g);color:#fff;font-size:17px;padding:13px 26px;box-shadow:0 8px 24px rgba(45,164,78,.35)}
+.hats{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:12px 0}
+.hats img{width:100%;aspect-ratio:1;border-radius:12px;border:2px solid transparent;background:#0d1117;cursor:pointer;padding:3px}
+.hats img.on{border-color:var(--g2);box-shadow:0 0 0 3px rgba(57,211,83,.25)}
+.keys{font-family:var(--mono);font-size:12px;color:var(--mute);margin-top:14px}
+kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 6px;background:#f6f8fa;color:var(--ink)}
+.clear h1{color:var(--g);font-size:clamp(40px,9vw,64px)}
+.stats{text-align:left;margin:16px auto;max-width:300px;font-family:var(--mono)}
+.stats div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)}
+.stats b{color:var(--p)}
+#status{font-family:var(--mono);font-size:12px;color:var(--mute);min-height:16px}
+.touch{position:fixed;bottom:18px;left:0;right:0;display:none;justify-content:space-between;padding:0 18px;z-index:6;pointer-events:none}
+.touch div{display:flex;gap:12px;pointer-events:auto}
+.touch button{width:66px;height:66px;border-radius:50%;font-size:24px;background:rgba(255,255,255,.85);box-shadow:0 6px 18px rgba(31,35,40,.12)}
+@media (pointer:coarse){.touch{display:flex}}
+.back{position:fixed;left:14px;bottom:14px;font-family:var(--mono);font-size:12px;color:var(--mute);z-index:5;text-decoration:none}
+@media (pointer:coarse){.back{display:none}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div class="hud l">
+  <div class="chip"><div class="sq"></div><div><small>COMMITS</small><b id="hc">0</b></div></div>
+  <div class="chip"><div class="ring"></div><div><small>BUGS</small><b id="hb">0/8</b></div></div>
+</div>
+<div class="hud r">
+  <div class="chip"><div><small>WORLD</small><b id="hw">main</b></div><div class="lives" id="lives"></div></div>
+</div>
+<a class="back" href="../">← PRovidence</a>
+
+<div class="touch">
+  <div><button data-k="left">◀</button><button data-k="right">▶</button></div>
+  <div><button data-k="silk">🕸</button><button data-k="jump">⤒</button></div>
+</div>
+
+<div class="overlay" id="title">
+  <div class="panel">
+    <h1>PRovidence <span>Quest</span></h1>
+    <p>The level is a contribution graph. The enemies are bugs. The final boss is a merge conflict.</p>
+    <div class="row"><input id="user" placeholder="github username" spellcheck="false" autocomplete="off"><button id="load">Load graph</button></div>
+    <div id="status">no username? you'll play a generated graph.</div>
+        <button class="go" id="play">▶ Play</button>
+    <div class="keys"><kbd>←</kbd><kbd>→</kbd> crawl · <kbd>Space</kbd> jump · <kbd>X</kbd> shoot silk · <kbd>M</kbd> mute</div>
+  </div>
+</div>
+
+<div class="overlay hide clear" id="clear">
+  <div class="panel">
+    <h1 id="ctitle">LEVEL CLEAR</h1>
+    <div class="stats">
+      <div><span>commits collected</span><b id="sc">0</b></div>
+      <div><span>bugs fixed</span><b id="sb">0 / 8</b></div>
+      <div><span>merge conflicts</span><b id="sm">0</b></div>
+      <div><span>time</span><b id="st">0s</b></div>
+    </div>
+    <div class="row"><button class="go" id="again">▶ Play again</button><button id="share">Share</button></div>
+    <p id="shared" style="min-height:20px;margin:6px 0 0"></p>
+  </div>
+</div>
+
+<script>
+(() => {
+'use strict';
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const $ = (id) => document.getElementById(id);
+const VH = 480, TILE = 34, GROUND = 446, GRAV = 2300;
+const GREENS = ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'];
+const BUGS = ['off-by-1', 'null', 'CORS', 'flaky', 'typo', 'race', 'NaN', 'leak'];
+const HATS = ['none'];
+const CODE = ['hero.bounce()', 'while (!asleep)', 'git merge --no-ff', 'fixed leak', 'repro ✓', 'eye.open()', 'commit = coin', 'level = contrib graph', '// what did I not see?'];
+let W = 800, scale = 1, dpr = 1;
+
+/* ───────── assets ───────── */
+const sprites = {};
+for (const h of HATS) { const i = new Image(); i.src = `../assets/sprites/${h}.svg`; sprites[h] = i; }
+const hat = 'none'; // the face of the project. hats live on GitHub only.
+
+/* ───────── audio ───────── */
+let actx = null, muted = false;
+function beep(f = 440, d = 0.08, type = 'square', vol = 0.04) {
+  if (muted) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = type; o.frequency.value = f; g.gain.value = vol;
+    g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + d);
+    o.connect(g).connect(actx.destination); o.start(); o.stop(actx.currentTime + d);
+  } catch {}
+}
+
+/* ───────── contribution graph ───────── */
+let weeks = null, total = 0, who = 'generated';
+function seeded(str) { let h = 2166136261; for (const c of str) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return () => ((h = Math.imul(h ^ (h >>> 15), 2246822507) ^ Math.imul(h ^ (h >>> 13), 3266489909)) >>> 0) / 4294967296; }
+function generated(name = 'providence') {
+  const r = seeded(name); const out = [];
+  for (let w = 0; w < 52; w++) {
+    const busy = r();
+    out.push(Array.from({ length: 7 }, () => { const v = r() < busy ? Math.ceil(r() * 4) : 0; return { level: v, count: v ? Math.ceil(r() * 3 * v) : 0 }; }));
+  }
+  return out;
+}
+async function load(user) {
+  $('status').textContent = `fetching ${user}'s graph…`;
+  try {
+    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 5000);
+    const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${encodeURIComponent(user)}?y=last`, { signal: ctl.signal });
+    clearTimeout(to);
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    const days = data.contributions.slice(-364);
+    const out = [];
+    for (let i = 0; i < days.length; i += 7) out.push(days.slice(i, i + 7).map((d) => ({ level: d.level, count: d.count })));
+    weeks = out; who = user;
+    const t = days.reduce((s, d) => s + d.count, 0);
+    $('status').textContent = `✓ ${user}: ${t.toLocaleString('en-US')} contributions → ${out.length} weeks of level`;
+    try { localStorage.setItem('pvq-user', user); } catch {}
+  } catch (e) {
+    weeks = generated(user); who = user;
+    $('status').textContent = `couldn't reach the graph API — generated a level from "${user}" instead`;
+  }
+}
+
+/* ───────── level ───────── */
+let solids, coins, bugs, boss, floaters, arenaX, levelEnd, spawn;
+function build() {
+  const wk = weeks || generated();
+  solids = []; coins = []; bugs = []; floaters = [];
+  let x = 0;
+  const col = (h, levels, wTiles = 2) => {
+    for (let i = 0; i < wTiles; i++) {
+      if (h > 0) solids.push({ x, y: GROUND - h * TILE, w: TILE, h: h * TILE + 200, levels, top: h });
+      x += TILE;
+    }
+  };
+  for (let i = 0; i < 4; i++) col(2, [2, 1, 3, 2, 1, 2, 1], 1);
+  spawn = { x: 40, y: GROUND - 2 * TILE - 60 };
+  let pits = 0;
+  wk.forEach((days, wi) => {
+    const active = days.filter((d) => d.level > 0).length;
+    let h = active === 0 ? 0 : 1 + Math.ceil((active * 4) / 7);
+    if (h === 0) { pits++; if (pits > 1) h = 1; } else pits = 0;
+    if (wi < 2 && h === 0) h = 1;
+    const levels = days.map((d) => d.level);
+    const startX = x;
+    col(h, levels, 2);
+    const count = days.reduce((s, d) => s + d.count, 0);
+    if (count > 0) {
+      const baseY = GROUND - Math.max(h, 1) * TILE;
+      const n = Math.min(3, Math.ceil(count / 6));
+      for (let k = 0; k < n; k++) coins.push({ x: startX + 10 + k * 18, y: baseY - 50 - (k % 2) * 16, v: Math.max(1, Math.round(count / n)), got: false, t: Math.random() * 6 });
+    }
+    const maxL = Math.max(...levels);
+    if (maxL >= 4 && h > 0 && wi % 3 === 0) {
+      solids.push({ x: startX, y: GROUND - (h + 3) * TILE, w: TILE * 2, h: TILE * 0.6, levels: [4], top: 0, float: true });
+      coins.push({ x: startX + 26, y: GROUND - (h + 4) * TILE - 6, v: count + 5, got: false, t: 0 });
+    }
+  });
+  // place 8 bugs on solid columns spread across the level
+  const tops = solids.filter((s) => !s.float && s.x > 360);
+  for (let i = 0; i < 8; i++) {
+    const s = tops[Math.floor(((i + 0.5) / 8) * tops.length)];
+    if (!s) continue;
+    bugs.push({ x: s.x + 4, y: s.y - 26, w: 28, h: 24, vx: (i % 2 ? 1 : -1) * (55 + i * 6), name: BUGS[i], state: 'alive', vy: 0, t: 0 });
+  }
+  // boss arena
+  arenaX = x + TILE * 2;
+  for (let i = 0; i < 26; i++) col(2, [3, 2, 4, 3, 2, 3, 4], 1);
+  levelEnd = x;
+  boss = { x: arenaX + TILE * 12, y: GROUND - 2 * TILE - 230, w: 190, h: 112, hp: 8, max: 8, vx: 120, t: 0, state: 'sleep', wraps: [], drop: 1.6 };
+  for (let i = 0; i < 26; i++) floaters.push({ x: Math.random() * levelEnd, y: 40 + Math.random() * 260, s: 8 + Math.random() * 22, p: 0.3 + Math.random() * 0.5, txt: Math.random() < 0.35 ? CODE[i % CODE.length] : null });
+}
+
+/* ───────── state ───────── */
+const keys = {};
+let P, shots, parts, texts, camX, lives, commits, fixed, running = false, t0 = 0, lastT = 0, cleared = false, shake = 0;
+function reset() {
+  build();
+  P = { x: spawn.x, y: spawn.y, w: 44, h: 38, vx: 0, vy: 0, face: 1, ground: false, coyote: 0, buf: 0, inv: 0, cool: 0, safe: { ...spawn }, squish: 0 };
+  shots = []; parts = []; texts = []; camX = 0; lives = 3; commits = 0; fixed = 0; cleared = false; shake = 0;
+  t0 = performance.now(); hud();
+}
+function hud() {
+  $('hc').textContent = commits.toLocaleString('en-US');
+  $('hb').textContent = `${fixed}/8`;
+  $('hw').textContent = boss && boss.state !== 'sleep' ? 'merge' : 'main';
+  $('lives').innerHTML = [0, 1, 2].map((i) => `<img src="../assets/sprites/none.svg" class="${i < lives ? '' : 'lost'}" alt="">`).join('');
+}
+
+/* ───────── input ───────── */
+const map = { ArrowLeft: 'left', KeyA: 'left', ArrowRight: 'right', KeyD: 'right', ArrowUp: 'jump', KeyW: 'jump', Space: 'jump', KeyX: 'silk', KeyJ: 'silk', KeyK: 'silk', ShiftLeft: 'silk' };
+addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') { if (e.key === 'Enter') $('load').click(); return; }
+  const k = map[e.code]; if (k) { if (k === 'jump' && !keys.jump) P && (P.buf = 0.12); if (k === 'silk' && !keys.silk) fire(); keys[k] = true; e.preventDefault(); }
+  if (e.code === 'KeyM') muted = !muted;
+  if (e.code === 'Enter' && !running) start();
+});
+addEventListener('keyup', (e) => { const k = map[e.code]; if (k) keys[k] = false; });
+document.querySelectorAll('.touch button').forEach((b) => {
+  const k = b.dataset.k;
+  b.addEventListener('pointerdown', (e) => { e.preventDefault(); if (k === 'jump') P && (P.buf = 0.12); if (k === 'silk') fire(); keys[k] = true; });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) => b.addEventListener(ev, () => (keys[k] = false)));
+});
+
+function fire() {
+  if (!running || !P || P.cool > 0) return;
+  P.cool = 0.28;
+  shots.push({ x: P.x + P.w / 2 + P.face * 20, y: P.y + 12, vx: P.face * 900 + P.vx * 0.3, life: 0.42, ox: P.x + P.w / 2, oy: P.y + 12 });
+  beep(880, 0.06, 'triangle', 0.05);
+}
+
+/* ───────── physics ───────── */
+const hit = (a, b) => a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+function moveAndCollide(o, dt) {
+  o.x += o.vx * dt;
+  for (const s of solids) if (hit(o, s)) { if (o.vx > 0) o.x = s.x - o.w; else if (o.vx < 0) o.x = s.x + s.w; o.vx = 0; o.hitWall = true; }
+  o.y += o.vy * dt; o.ground = false;
+  for (const s of solids) if (hit(o, s)) { if (o.vy > 0) { o.y = s.y - o.h; o.ground = true; } else if (o.vy < 0) o.y = s.y + s.h; o.vy = 0; }
+}
+function burst(x, y, n, colors, spd = 260) {
+  for (let i = 0; i < n; i++) { const a = Math.random() * Math.PI * 2, v = spd * (0.3 + Math.random()); parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 120, life: 0.6 + Math.random() * 0.6, c: colors[i % colors.length], s: 3 + Math.random() * 4 }); }
+}
+function float(x, y, txt, c = '#2da44e', big = false) { texts.push({ x, y, txt, c, life: 1.1, big }); }
+function hurt() {
+  if (P.inv > 0 || cleared) return;
+  lives--; P.inv = 1.6; shake = 0.35; P.vy = -520; P.vx = -P.face * 260; beep(150, 0.25, 'sawtooth', 0.06);
+  float(P.x, P.y - 10, lives > 0 ? 'regression!' : 'rolled back', '#cf222e');
+  hud();
+  if (lives <= 0) setTimeout(() => end(false), 700);
+}
+
+function update(dt) {
+  // player
+  const ax = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+  if (ax) P.face = ax;
+  const target = ax * 330;
+  P.vx += (target - P.vx) * Math.min(1, dt * (P.ground ? 14 : 7));
+  P.vy += GRAV * dt;
+  if (!keys.jump && P.vy < -300) P.vy += GRAV * dt * 1.4; // variable jump height
+  P.vy = Math.min(P.vy, 1100);
+  P.coyote = P.ground ? 0.1 : P.coyote - dt; P.buf -= dt; P.cool -= dt; P.inv -= dt;
+  if (P.buf > 0 && P.coyote > 0) { P.vy = -800; P.buf = 0; P.coyote = 0; P.squish = 0.15; beep(520, 0.07, 'square', 0.03); }
+  const wasGround = P.ground;
+  moveAndCollide(P, dt);
+  if (!wasGround && P.ground) P.squish = 0.12;
+  P.squish -= dt;
+  if (P.ground) P.safe = { x: P.x, y: P.y };
+  if (P.x < 0) P.x = 0;
+  if (P.x > levelEnd - P.w) P.x = levelEnd - P.w;
+  if (P.y > VH + 80) { hurt(); if (lives > 0) { P.x = P.safe.x - P.face * 40; P.y = P.safe.y - 40; P.vx = 0; P.vy = 0; } }
+
+  // coins = commits
+  for (const c of coins) {
+    c.t += dt;
+    if (!c.got && hit(P, { x: c.x - 8, y: c.y - 8, w: 16, h: 16 })) {
+      c.got = true; commits += c.v; float(c.x, c.y, `+${c.v}`); burst(c.x, c.y, 6, ['#40c463', '#216e39']); beep(1200 + Math.random() * 200, 0.05, 'square', 0.03); hud();
+    }
+  }
+
+  // bugs
+  for (const b of bugs) {
+    b.t += dt;
+    if (b.state === 'alive') {
+      b.vy += GRAV * dt;
+      const before = b.vx; b.hitWall = false;
+      moveAndCollide(b, dt);
+      if (b.hitWall) b.vx = -before;
+      // turn around at edges
+      const probe = { x: b.x + (b.vx > 0 ? b.w + 2 : -4), y: b.y + b.h + 4, w: 2, h: 4 };
+      if (b.ground && !solids.some((s) => hit(probe, s))) b.vx = -b.vx;
+      if (b.vx === 0) b.vx = 60;
+      if (hit(P, b)) {
+        if (P.vy > 120 && P.y + P.h - b.y < 22) { wrap(b, 'stomped'); P.vy = -560; }
+        else hurt();
+      }
+    } else if (b.state === 'cocoon') { b.vy += GRAV * dt * 0.5; b.y += b.vy * dt; if (b.y > VH + 100) b.state = 'gone'; }
+  }
+
+  // boss: the merge conflict
+  if (boss.state === 'sleep' && P.x > arenaX - 120) { boss.state = 'fight'; float(boss.x, boss.y - 20, 'CONFLICT (content): merge conflict', '#cf222e', true); shake = 0.4; beep(110, 0.4, 'sawtooth', 0.07); hud(); }
+  if (boss.state === 'fight') {
+    boss.t += dt; boss.drop -= dt;
+    boss.x += boss.vx * dt;
+    if (boss.x < arenaX + 40 || boss.x + boss.w > levelEnd - 40) boss.vx *= -1;
+    boss.y = GROUND - 2 * TILE - 240 + Math.sin(boss.t * 2) * 26;
+    if (boss.drop <= 0) {
+      boss.drop = Math.max(0.6, 1.5 - (boss.max - boss.hp) * 0.1);
+      const glyph = ['<<<<<<<', '=======', '>>>>>>>'][Math.floor(Math.random() * 3)];
+      bugs.push({ x: boss.x + boss.w / 2 - 30, y: boss.y + boss.h, w: 60, h: 18, vx: (P.x > boss.x ? 1 : -1) * 40, vy: 60, name: glyph, state: 'marker', t: 0 });
+    }
+    if (hit(P, boss)) hurt();
+  }
+  for (const m of bugs) if (m.state === 'marker') {
+    m.vy += GRAV * 0.35 * dt; m.x += m.vx * dt; m.y += m.vy * dt;
+    if (hit(P, m)) { hurt(); m.state = 'gone'; }
+    if (solids.some((s) => hit(m, s))) { burst(m.x + 30, m.y + 10, 6, ['#cf222e', '#ff8182']); m.state = 'gone'; }
+  }
+  if (boss.state === 'wrapped') { boss.t += dt; boss.y += Math.min(260, boss.t * 300) * dt; if (boss.t > 0.8 && !cleared) { cleared = true; boss.state = 'merged'; boss.t = 0; beep(660, 0.12); setTimeout(() => beep(880, 0.12), 120); setTimeout(() => beep(1320, 0.3), 240); burst(boss.x + boss.w / 2, boss.y, 80, ['#8250df', '#40c463', '#bf8700', '#0969da', '#cf222e'], 520); setTimeout(() => end(true), 1500); } }
+  if (boss.state === 'merged') boss.t += dt;
+
+  // silk shots
+  for (const s of shots) {
+    s.x += s.vx * dt; s.life -= dt;
+    const box = { x: s.x - 6, y: s.y - 6, w: 12, h: 12 };
+    for (const b of bugs) if ((b.state === 'alive' || b.state === 'marker') && hit(box, b)) { if (b.state === 'marker') { b.state = 'gone'; burst(b.x + 30, b.y, 8, ['#d0d7de', '#fff']); } else wrap(b, 'silk'); s.life = 0; }
+    if (boss.state === 'fight' && hit(box, boss)) {
+      s.life = 0; boss.hp--; boss.wraps.push(Math.random()); shake = 0.15; burst(s.x, s.y, 10, ['#d0d7de', '#8c959f']); beep(300 + boss.hp * 40, 0.08, 'square', 0.05);
+      float(boss.x + boss.w / 2, boss.y - 10, `${boss.max - boss.hp}/${boss.max} hunks resolved`, '#8250df');
+      if (boss.hp <= 0) { boss.state = 'wrapped'; boss.t = 0; bugs.forEach((m) => m.state === 'marker' && (m.state = 'gone')); }
+    }
+    if (solids.some((q) => hit(box, q))) s.life = 0;
+  }
+  shots = shots.filter((s) => s.life > 0);
+  for (const p of parts) { p.vy += 900 * dt; p.x += p.vx * dt; p.y += p.vy * dt; p.life -= dt; }
+  parts = parts.filter((p) => p.life > 0);
+  for (const t of texts) { t.y -= 40 * dt; t.life -= dt; }
+  texts = texts.filter((t) => t.life > 0);
+  shake = Math.max(0, shake - dt);
+
+  // camera
+  const want = P.x + P.w / 2 - W * 0.38;
+  camX += (want - camX) * Math.min(1, dt * 6);
+  camX = Math.max(0, Math.min(camX, levelEnd - W));
+}
+
+function wrap(b, how) {
+  b.state = 'cocoon'; b.vy = -300; fixed++; hud();
+  float(b.x, b.y - 14, `fixed ${b.name}`, '#8250df');
+  burst(b.x + 14, b.y + 10, 16, ['#ffffff', '#d0d7de', '#cf222e']);
+  beep(how === 'silk' ? 980 : 760, 0.1, 'triangle', 0.06);
+}
+
+/* ───────── render ───────── */
+function rr(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, w, h, r) : ctx.rect(x, y, w, h); }
+function drawSpider(x, y, w, face, t) {
+  const img = sprites[hat] && sprites[hat].complete ? sprites[hat] : sprites.none;
+  const sq = P.squish > 0 ? 1 + P.squish * 1.5 : 1;
+  const bob = P.ground && Math.abs(P.vx) > 20 ? Math.sin(t * 22) * 2 : 0;
+  const ih = w * (img.naturalHeight / img.naturalWidth || 1);
+  ctx.save();
+  ctx.translate(x, y + bob);
+  ctx.rotate(Math.max(-0.25, Math.min(0.25, P.vx / 2200 + (P.ground ? 0 : P.vy / 5000))));
+  ctx.scale(face * sq, 1 / sq);
+  if (P.inv > 0 && Math.floor(P.inv * 12) % 2) ctx.globalAlpha = 0.35;
+  ctx.drawImage(img, -w / 2, -ih * 0.72, w, ih);
+  ctx.restore();
+}
+function drawBug(b, t) {
+  ctx.save(); ctx.translate(b.x + b.w / 2, b.y + b.h / 2);
+  if (b.state === 'cocoon') {
+    ctx.rotate(b.t * 4);
+    ctx.fillStyle = '#f6f8fa'; ctx.strokeStyle = '#8c959f'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.ellipse(0, 0, 12, 17, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    for (let i = -2; i <= 2; i++) { ctx.beginPath(); ctx.moveTo(-12, i * 6); ctx.lineTo(12, i * 6 + 3); ctx.stroke(); }
+    ctx.restore(); return;
+  }
+  const walk = Math.sin(t * 18 + b.x) * 3;
+  ctx.strokeStyle = '#1f2328'; ctx.lineWidth = 2;
+  for (let i = -1; i <= 1; i++) { ctx.beginPath(); ctx.moveTo(i * 7, 2); ctx.lineTo(i * 9 - 8, 12 + (i % 2 ? walk : -walk)); ctx.moveTo(i * 7, 2); ctx.lineTo(i * 9 + 8, 12 + (i % 2 ? -walk : walk)); ctx.stroke(); }
+  ctx.fillStyle = '#cf222e'; ctx.beginPath(); ctx.ellipse(0, 0, 14, 11, 0, 0, Math.PI * 2); ctx.fill();
+  ctx.fillStyle = '#82071e'; ctx.beginPath(); ctx.arc(b.vx > 0 ? 12 : -12, -3, 6, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#82071e'; ctx.beginPath(); ctx.moveTo(0, -11); ctx.lineTo(0, 11); ctx.stroke();
+  ctx.fillStyle = '#1f2328'; [[-6, -4], [5, 3], [-4, 5]].forEach(([dx, dy]) => { ctx.beginPath(); ctx.arc(dx, dy, 2.2, 0, 7); ctx.fill(); });
+  ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(b.vx > 0 ? 14 : -14, -5, 2, 0, 7); ctx.fill();
+  // label
+  ctx.font = '700 11px JetBrains Mono, monospace'; const tw = ctx.measureText(b.name).width + 12;
+  ctx.fillStyle = '#ffebe9'; ctx.strokeStyle = '#ff8182'; ctx.lineWidth = 1; rr(-tw / 2, -36, tw, 18, 9); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#cf222e'; ctx.textAlign = 'center'; ctx.fillText(b.name, 0, -23);
+  ctx.restore();
+}
+function drawBoss(t) {
+  if (boss.state === 'sleep' && boss.x - camX > W + 40) return;
+  const { x, y, w, h } = boss;
+  if (boss.state === 'merged') {
+    const k = Math.min(1, boss.t * 3), cx = x + w / 2, cy = GROUND - 2 * TILE - 120;
+    ctx.save(); ctx.translate(cx, cy); ctx.scale(k, k);
+    ctx.fillStyle = '#8250df'; ctx.beginPath(); ctx.arc(0, 0, 58, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 7; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.arc(-16, -22, 9, 0, 7); ctx.stroke(); ctx.beginPath(); ctx.arc(-16, 24, 9, 0, 7); ctx.stroke(); ctx.beginPath(); ctx.arc(20, 2, 9, 0, 7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-16, -13); ctx.lineTo(-16, 15); ctx.moveTo(-16, -10); ctx.quadraticCurveTo(-14, 2, 11, 2); ctx.stroke();
+    ctx.fillStyle = '#8250df'; ctx.font = '900 30px Inter, sans-serif'; ctx.textAlign = 'center'; ctx.fillText('MERGED', 0, 100);
+    ctx.restore(); return;
+  }
+  ctx.save();
+  ctx.shadowColor = 'rgba(207,34,46,.35)'; ctx.shadowBlur = 24;
+  ctx.fillStyle = '#fff'; ctx.strokeStyle = '#cf222e'; ctx.lineWidth = 3; rr(x, y, w, h, 14); ctx.fill(); ctx.stroke();
+  ctx.shadowBlur = 0;
+  ctx.font = '700 15px JetBrains Mono, monospace'; ctx.textAlign = 'left';
+  const lines = [['<<<<<<< HEAD', '#cf222e', '#ffebe9'], ['=======', '#656d76', '#f6f8fa'], ['>>>>>>> feat', '#0969da', '#ddf4ff']];
+  lines.forEach(([s, c, bg], i) => { ctx.fillStyle = bg; ctx.fillRect(x + 10, y + 12 + i * 32, w - 20, 26); ctx.fillStyle = c; ctx.fillText(s, x + 18, y + 31 + i * 32); });
+  // angry eyes
+  const look = Math.max(-4, Math.min(4, (P.x - x) / 60));
+  ctx.fillStyle = '#1f2328'; ctx.beginPath(); ctx.arc(x + w - 46 + look, y + 28, 4, 0, 7); ctx.arc(x + w - 26 + look, y + 28, 4, 0, 7); ctx.fill();
+  // silk wraps
+  ctx.strokeStyle = 'rgba(140,149,159,.9)'; ctx.lineWidth = 2.5;
+  boss.wraps.forEach((r, i) => { ctx.beginPath(); ctx.moveTo(x - 6, y + 10 + r * (h - 20)); ctx.quadraticCurveTo(x + w / 2, y + (i % 2 ? -10 : h + 10), x + w + 6, y + 10 + ((r * 7) % 1) * (h - 20)); ctx.stroke(); });
+  if (boss.state === 'wrapped') { ctx.fillStyle = 'rgba(246,248,250,.85)'; rr(x - 4, y - 4, w + 8, h + 8, 16); ctx.fill(); }
+  // hp
+  if (boss.state === 'fight') { ctx.fillStyle = '#eaeef2'; rr(x, y - 18, w, 8, 4); ctx.fill(); ctx.fillStyle = '#cf222e'; rr(x, y - 18, (w * boss.hp) / boss.max, 8, 4); ctx.fill(); }
+  ctx.restore();
+}
+
+function render(t) {
+  ctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
+  // background
+  const g = ctx.createLinearGradient(0, 0, 0, VH); g.addColorStop(0, '#ffffff'); g.addColorStop(1, '#f3fbf4');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, VH);
+  for (const f of floaters) {
+    const fx = ((f.x - camX * f.p) % (levelEnd + 200) + levelEnd + 200) % (levelEnd + 200) - 100;
+    if (fx < -200 || fx > W + 100) continue;
+    if (f.txt) { ctx.fillStyle = 'rgba(101,109,118,.22)'; ctx.font = '14px JetBrains Mono, monospace'; ctx.fillText(f.txt, fx, f.y); }
+    else { ctx.fillStyle = `rgba(64,196,99,${0.08 + f.p * 0.12})`; rr(fx, f.y + Math.sin(t / 900 + f.x) * 6, f.s, f.s, 4); ctx.fill(); }
+  }
+  ctx.save();
+  const sx = shake > 0 ? (Math.random() - 0.5) * 10 * shake * 3 : 0, sy = shake > 0 ? (Math.random() - 0.5) * 10 * shake * 3 : 0;
+  ctx.translate(-Math.round(camX) + sx, sy);
+  // ghost grid under the level (empty contribution cells)
+  for (let gx = Math.floor(camX / TILE) * TILE; gx < camX + W + TILE; gx += TILE) {
+    ctx.fillStyle = '#f6f8fa'; rr(gx + 3, GROUND + 3, TILE - 6, TILE - 6, 5); ctx.fill();
+  }
+  // solids = contribution squares
+  for (const s of solids) {
+    if (s.x + s.w < camX - 10 || s.x > camX + W + 10) continue;
+    if (s.float) { ctx.fillStyle = GREENS[4]; rr(s.x + 2, s.y, s.w - 4, s.h, 6); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,.25)'; rr(s.x + 6, s.y + 3, s.w - 12, 4, 2); ctx.fill(); continue; }
+    for (let r = 0; r < s.top + 1; r++) {
+      const lv = r < s.top ? Math.max(1, s.levels[(s.top - 1 - r) % s.levels.length] || 1) : 0;
+      const yy = s.y + r * TILE;
+      if (yy > VH) break;
+      ctx.fillStyle = r < s.top ? GREENS[lv] : '#eaeef2';
+      rr(s.x + 3, yy + 3, TILE - 6, TILE - 6, 6); ctx.fill();
+      if (r === 0) { ctx.fillStyle = 'rgba(255,255,255,.28)'; rr(s.x + 6, yy + 6, TILE - 12, 4, 2); ctx.fill(); }
+    }
+  }
+  // coins
+  for (const c of coins) if (!c.got) { const yy = c.y + Math.sin(c.t * 3) * 4; ctx.fillStyle = '#2da44e'; rr(c.x - 8, yy - 8, 16, 16, 4); ctx.fill(); ctx.fillStyle = 'rgba(255,255,255,.5)'; rr(c.x - 5, yy - 5, 5, 5, 2); ctx.fill(); }
+  // arena gate
+  ctx.fillStyle = 'rgba(130,80,223,.08)'; ctx.fillRect(arenaX - 10, 0, 4, GROUND);
+  ctx.fillStyle = 'rgba(130,80,223,.55)'; ctx.font = '700 12px JetBrains Mono, monospace'; ctx.textAlign = 'left'; ctx.fillText('git merge feat', arenaX, 70);
+  drawBoss(t);
+  for (const b of bugs) if (b.state === 'alive' || b.state === 'cocoon') drawBug(b, t / 1000);
+  for (const m of bugs) if (m.state === 'marker') { ctx.fillStyle = '#cf222e'; ctx.font = '700 14px JetBrains Mono, monospace'; ctx.textAlign = 'left'; ctx.fillText(m.name, m.x, m.y + 14); }
+  // silk
+  for (const s of shots) { ctx.strokeStyle = 'rgba(140,149,159,.9)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(P.x + P.w / 2, P.y + 12); ctx.lineTo(s.x, s.y); ctx.stroke(); ctx.fillStyle = '#fff'; ctx.strokeStyle = '#8c959f'; ctx.beginPath(); ctx.arc(s.x, s.y, 6, 0, 7); ctx.fill(); ctx.stroke(); }
+  drawSpider(P.x + P.w / 2, P.y + P.h / 2 + 6, 92, P.face, t / 1000);
+  for (const p of parts) { ctx.globalAlpha = Math.min(1, p.life * 2); ctx.fillStyle = p.c; ctx.fillRect(p.x, p.y, p.s, p.s); }
+  ctx.globalAlpha = 1;
+  for (const tx of texts) { ctx.globalAlpha = Math.min(1, tx.life * 2); ctx.fillStyle = tx.c; ctx.font = `700 ${tx.big ? 18 : 14}px JetBrains Mono, monospace`; ctx.textAlign = 'center'; ctx.fillText(tx.txt, tx.x, tx.y); }
+  ctx.globalAlpha = 1;
+  ctx.restore();
+}
+
+/* ───────── loop ───────── */
+function resize() {
+  dpr = Math.min(2, window.devicePixelRatio || 1);
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr;
+  scale = innerHeight / VH; W = innerWidth / scale;
+}
+addEventListener('resize', resize); resize();
+function loop(now) {
+  const dt = Math.min(0.033, (now - lastT) / 1000 || 0); lastT = now;
+  if (running) update(dt);
+  if (P) render(now);
+  requestAnimationFrame(loop);
+}
+function start() {
+  $('title').classList.add('hide'); $('clear').classList.add('hide');
+  reset(); running = true; lastT = performance.now(); beep(660, 0.08);
+}
+function end(win) {
+  running = false;
+  const secs = ((performance.now() - t0) / 1000).toFixed(1);
+  $('ctitle').textContent = win ? 'LEVEL CLEAR' : 'ROLLED BACK';
+  $('ctitle').style.color = win ? '' : '#cf222e';
+  $('sc').textContent = commits.toLocaleString('en-US');
+  $('sb').textContent = `${fixed} / 8`;
+  $('sm').textContent = win ? '0' : '1';
+  $('st').textContent = secs + 's';
+  $('clear').classList.remove('hide');
+  if (win) burst(P.x, P.y - 200, 120, ['#8250df', '#40c463', '#bf8700', '#0969da', '#cf222e'], 600);
+  end.text = win
+    ? `I beat PRovidence Quest on ${who === 'generated' ? 'a generated' : who + "'s"} contribution graph: ${commits} commits, ${fixed}/8 bugs fixed, merge conflict wrapped in silk in ${secs}s 🕷`
+    : `A merge conflict rolled me back in PRovidence Quest. ${fixed}/8 bugs fixed. 🕷`;
+}
+
+/* ───────── title screen ───────── */
+$('load').onclick = () => { const u = $('user').value.trim().replace(/^@/, ''); if (u) load(u); };
+$('play').onclick = start;
+$('again').onclick = start;
+$('share').onclick = async () => {
+  const url = location.href.split('?')[0] + (who !== 'generated' ? `?user=${encodeURIComponent(who)}` : '');
+  const text = `${end.text}\n${url}`;
+  try { if (navigator.share) await navigator.share({ text, url }); else { await navigator.clipboard.writeText(text); $('shared').textContent = 'copied to clipboard ✓'; } } catch {}
+};
+const qs = new URLSearchParams(location.search).get('user');
+let saved = null; try { saved = localStorage.getItem('pvq-user'); } catch {}
+if (qs || saved) { $('user').value = qs || saved; load(qs || saved); }
+// attract mode: show the level behind the title
+reset(); requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
