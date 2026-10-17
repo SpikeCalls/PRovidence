@@ -1,93 +1,99 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -50 400 384" width="400" height="384" role="img" aria-label="PRovidence wearing Ship-It Party Hat">
 <defs>
-  <radialGradient id="spparty-iris" cx=".38" cy=".35" r=".75">
-    <stop offset="0" stop-color="#9fe6a0"/><stop offset=".45" stop-color="#3fae55"/><stop offset="1" stop-color="#145a27"/>
+  <linearGradient id="spparty-shell" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#e6e6e6"/><stop offset="1" stop-color="#cbcbcb"/>
+  </linearGradient>
+  <filter id="spparty-soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.1"/></filter>
+  <radialGradient id="spparty-iris" cx=".62" cy=".32" r=".8">
+    <stop offset="0" stop-color="#7fcf7f"/><stop offset=".5" stop-color="#2f8a3b"/><stop offset="1" stop-color="#0f3d14"/>
   </radialGradient>
 </defs>
 
 <g class="spparty-all">
-<g transform="translate(7 9)"><polyline points="223.0,103.0 254.0,12.0 362.0,44.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="234.0,128.0 316.0,72.0 372.0,150.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="242.0,151.0 329.0,108.0 379.0,199.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="247.0,175.0 338.0,194.0 345.0,293.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="177.0,103.0 146.0,12.0 38.0,44.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="166.0,128.0 84.0,72.0 28.0,150.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="158.0,151.0 71.0,108.0 21.0,199.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/>
-<polyline points="153.0,175.0 62.0,194.0 55.0,293.0" fill="none" stroke="rgba(0,0,0,.28)" stroke-width="13" stroke-linejoin="round"/></g>
+<g transform="translate(10 11)" filter="url(#spparty-soft)"><polyline points="215.0,95.0 258.0,11.0 356.0,63.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="232.0,125.0 309.0,64.0 395.0,146.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="240.0,155.0 334.0,127.0 383.0,218.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="245.0,180.0 335.0,210.0 332.0,305.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="185.0,95.0 142.0,11.0 44.0,63.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="168.0,125.0 91.0,64.0 5.0,146.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="160.0,155.0 66.0,127.0 17.0,218.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/>
+<polyline points="155.0,180.0 65.0,210.0 68.0,305.0" fill="none" stroke="#a4a4a4" stroke-width="12.5" stroke-linejoin="round"/></g>
 <g class="leg">
-  <polyline points="223.0,103.0 254.0,12.0 362.0,44.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="223.0,103.0 254.0,12.0 359.1,43.1" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="224.6,98.5 254.0,12.0 353.9,41.6" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="232.3" cy="75.7" r="1.9" fill="#111111"/><circle cx="295.0" cy="24.2" r="1.9" fill="#111111"/><circle cx="242.2" cy="46.6" r="1.9" fill="#111111"/><circle cx="329.6" cy="34.4" r="1.9" fill="#111111"/>
-  <circle cx="254" cy="12" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="215.0,95.0 258.0,11.0 356.0,63.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="215.0,95.0 258.0,11.0 353.3,61.6" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="216.7,91.6 258.0,11.0 349.5,59.6" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="234.1" cy="57.6" r="1.8" fill="#111111"/><circle cx="242.3" cy="41.7" r="1.8" fill="#111111"/><circle cx="250.5" cy="25.7" r="1.8" fill="#111111"/><circle cx="277.6" cy="21.4" r="1.8" fill="#111111"/><circle cx="297.2" cy="31.8" r="1.8" fill="#111111"/><circle cx="316.8" cy="42.2" r="1.8" fill="#111111"/><circle cx="336.4" cy="52.6" r="1.8" fill="#111111"/>
+  <circle cx="258" cy="11" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="234.0,128.0 316.0,72.0 372.0,150.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="234.0,128.0 316.0,72.0 370.3,147.6" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="238.1,125.2 316.0,72.0 367.5,143.8" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="258.6" cy="111.2" r="1.9" fill="#111111"/><circle cx="337.3" cy="101.6" r="1.9" fill="#111111"/><circle cx="284.8" cy="93.3" r="1.9" fill="#111111"/><circle cx="355.2" cy="126.6" r="1.9" fill="#111111"/>
-  <circle cx="316" cy="72" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="232.0,125.0 309.0,64.0 395.0,146.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="232.0,125.0 309.0,64.0 392.8,143.9" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="235.1,122.6 309.0,64.0 389.5,140.7" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="264.4" cy="99.3" r="1.8" fill="#111111"/><circle cx="275.4" cy="90.6" r="1.8" fill="#111111"/><circle cx="286.4" cy="81.9" r="1.8" fill="#111111"/><circle cx="297.4" cy="73.2" r="1.8" fill="#111111"/><circle cx="326.2" cy="80.4" r="1.8" fill="#111111"/><circle cx="343.4" cy="96.8" r="1.8" fill="#111111"/><circle cx="360.6" cy="113.2" r="1.8" fill="#111111"/><circle cx="377.8" cy="129.6" r="1.8" fill="#111111"/>
+  <circle cx="309" cy="64" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="242.0,151.0 329.0,108.0 379.0,199.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="242.0,151.0 329.0,108.0 377.6,196.4" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="246.3,148.8 329.0,108.0 375.1,192.0" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="268.1" cy="138.1" r="1.9" fill="#111111"/><circle cx="348.0" cy="142.6" r="1.9" fill="#111111"/><circle cx="295.9" cy="124.3" r="1.9" fill="#111111"/><circle cx="364.0" cy="171.7" r="1.9" fill="#111111"/>
-  <circle cx="329" cy="108" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="240.0,155.0 334.0,127.0 383.0,218.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="240.0,155.0 334.0,127.0 381.6,215.4" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="243.8,153.9 334.0,127.0 379.7,211.8" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="279.6" cy="143.2" r="1.8" fill="#111111"/><circle cx="293.0" cy="139.2" r="1.8" fill="#111111"/><circle cx="306.4" cy="135.2" r="1.8" fill="#111111"/><circle cx="319.8" cy="131.2" r="1.8" fill="#111111"/><circle cx="343.8" cy="145.2" r="1.8" fill="#111111"/><circle cx="353.6" cy="163.4" r="1.8" fill="#111111"/><circle cx="363.4" cy="181.6" r="1.8" fill="#111111"/><circle cx="373.2" cy="199.8" r="1.8" fill="#111111"/>
+  <circle cx="334" cy="127" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="247.0,175.0 338.0,194.0 345.0,293.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="247.0,175.0 338.0,194.0 344.8,290.0" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="251.6,175.9 338.0,194.0 344.4,285.2" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="274.3" cy="180.7" r="1.9" fill="#111111"/><circle cx="340.7" cy="231.6" r="1.9" fill="#111111"/><circle cx="303.4" cy="186.8" r="1.9" fill="#111111"/><circle cx="342.9" cy="263.3" r="1.9" fill="#111111"/>
-  <circle cx="338" cy="194" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="245.0,180.0 335.0,210.0 332.0,305.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="245.0,180.0 335.0,210.0 332.1,302.0" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="248.6,181.2 335.0,210.0 332.2,298.3" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="285.1" cy="193.3" r="1.8" fill="#111111"/><circle cx="302.1" cy="199.1" r="1.8" fill="#111111"/><circle cx="319.3" cy="204.8" r="1.8" fill="#111111"/><circle cx="334.3" cy="232.2" r="1.8" fill="#111111"/><circle cx="333.5" cy="257.5" r="1.8" fill="#111111"/><circle cx="332.7" cy="282.8" r="1.8" fill="#111111"/>
+  <circle cx="335" cy="210" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="177.0,103.0 146.0,12.0 38.0,44.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="177.0,103.0 146.0,12.0 40.9,43.1" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="175.4,98.5 146.0,12.0 46.1,41.6" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="167.7" cy="75.7" r="1.9" fill="#111111"/><circle cx="105.0" cy="24.2" r="1.9" fill="#111111"/><circle cx="157.8" cy="46.6" r="1.9" fill="#111111"/><circle cx="70.4" cy="34.4" r="1.9" fill="#111111"/>
-  <circle cx="146" cy="12" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="185.0,95.0 142.0,11.0 44.0,63.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="185.0,95.0 142.0,11.0 46.7,61.6" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="183.3,91.6 142.0,11.0 50.5,59.6" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="165.9" cy="57.6" r="1.8" fill="#111111"/><circle cx="157.7" cy="41.7" r="1.8" fill="#111111"/><circle cx="149.5" cy="25.7" r="1.8" fill="#111111"/><circle cx="122.4" cy="21.4" r="1.8" fill="#111111"/><circle cx="102.8" cy="31.8" r="1.8" fill="#111111"/><circle cx="83.2" cy="42.2" r="1.8" fill="#111111"/><circle cx="63.6" cy="52.6" r="1.8" fill="#111111"/>
+  <circle cx="142" cy="11" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="166.0,128.0 84.0,72.0 28.0,150.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="166.0,128.0 84.0,72.0 29.7,147.6" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="161.9,125.2 84.0,72.0 32.5,143.8" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="141.4" cy="111.2" r="1.9" fill="#111111"/><circle cx="62.7" cy="101.6" r="1.9" fill="#111111"/><circle cx="115.2" cy="93.3" r="1.9" fill="#111111"/><circle cx="44.8" cy="126.6" r="1.9" fill="#111111"/>
-  <circle cx="84" cy="72" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="168.0,125.0 91.0,64.0 5.0,146.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="168.0,125.0 91.0,64.0 7.2,143.9" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="164.9,122.6 91.0,64.0 10.5,140.7" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="135.6" cy="99.3" r="1.8" fill="#111111"/><circle cx="124.6" cy="90.6" r="1.8" fill="#111111"/><circle cx="113.6" cy="81.9" r="1.8" fill="#111111"/><circle cx="102.6" cy="73.2" r="1.8" fill="#111111"/><circle cx="73.8" cy="80.4" r="1.8" fill="#111111"/><circle cx="56.6" cy="96.8" r="1.8" fill="#111111"/><circle cx="39.4" cy="113.2" r="1.8" fill="#111111"/><circle cx="22.2" cy="129.6" r="1.8" fill="#111111"/>
+  <circle cx="91" cy="64" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="158.0,151.0 71.0,108.0 21.0,199.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="158.0,151.0 71.0,108.0 22.4,196.4" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="153.7,148.8 71.0,108.0 24.9,192.0" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="131.9" cy="138.1" r="1.9" fill="#111111"/><circle cx="52.0" cy="142.6" r="1.9" fill="#111111"/><circle cx="104.1" cy="124.3" r="1.9" fill="#111111"/><circle cx="36.0" cy="171.7" r="1.9" fill="#111111"/>
-  <circle cx="71" cy="108" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="160.0,155.0 66.0,127.0 17.0,218.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="160.0,155.0 66.0,127.0 18.4,215.4" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="156.2,153.9 66.0,127.0 20.3,211.8" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="120.4" cy="143.2" r="1.8" fill="#111111"/><circle cx="107.0" cy="139.2" r="1.8" fill="#111111"/><circle cx="93.6" cy="135.2" r="1.8" fill="#111111"/><circle cx="80.2" cy="131.2" r="1.8" fill="#111111"/><circle cx="56.2" cy="145.2" r="1.8" fill="#111111"/><circle cx="46.4" cy="163.4" r="1.8" fill="#111111"/><circle cx="36.6" cy="181.6" r="1.8" fill="#111111"/><circle cx="26.8" cy="199.8" r="1.8" fill="#111111"/>
+  <circle cx="66" cy="127" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 <g class="leg">
-  <polyline points="153.0,175.0 62.0,194.0 55.0,293.0" fill="none" stroke="#111111" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="153.0,175.0 62.0,194.0 55.2,290.0" fill="none" stroke="#d3d6d9" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="148.4,175.9 62.0,194.0 55.6,285.2" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
-  <circle cx="125.7" cy="180.7" r="1.9" fill="#111111"/><circle cx="59.3" cy="231.6" r="1.9" fill="#111111"/><circle cx="96.6" cy="186.8" r="1.9" fill="#111111"/><circle cx="57.1" cy="263.3" r="1.9" fill="#111111"/>
-  <circle cx="62" cy="194" r="6.5" fill="#f4f5f6" stroke="#111111" stroke-width="3"/>
+  <polyline points="155.0,180.0 65.0,210.0 68.0,305.0" fill="none" stroke="#111111" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="155.0,180.0 65.0,210.0 67.9,302.0" fill="none" stroke="#c9c9c9" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="151.4,181.2 65.0,210.0 67.8,298.3" fill="none" stroke="#e4e4e4" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
+  <circle cx="115.0" cy="193.3" r="1.8" fill="#111111"/><circle cx="97.8" cy="199.1" r="1.8" fill="#111111"/><circle cx="80.8" cy="204.8" r="1.8" fill="#111111"/><circle cx="65.7" cy="232.2" r="1.8" fill="#111111"/><circle cx="66.5" cy="257.5" r="1.8" fill="#111111"/><circle cx="67.3" cy="282.8" r="1.8" fill="#111111"/>
+  <circle cx="65" cy="210" r="5.2" fill="#ffffff" stroke="#111111" stroke-width="2.4"/>
 </g>
 
 <g class="body">
-  <polygon points="200.0,50.0 287.0,204.0 113.0,204.0" fill="rgba(0,0,0,.28)" transform="translate(7 9)" stroke="rgba(0,0,0,.28)" stroke-width="7" stroke-linejoin="round"/>
-  <polygon points="200.0,50.0 287.0,204.0 113.0,204.0" fill="#eceeef" stroke="#111111" stroke-width="8" stroke-linejoin="round"/>
-  <clipPath id="spparty-in"><polygon points="200,74 133,192 267,192"/></clipPath>
-  <g clip-path="url(#spparty-in)"><line x1="200" y1="150" x2="124" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="133" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="142" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="151" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="160" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="169" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="178" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="187" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="196" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="205" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="214" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="223" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="232" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="241" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="250" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="259" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="268" y2="200" stroke="#2b2b2b" stroke-width="1.6"/><line x1="200" y1="150" x2="176" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="184" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="192" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="200" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="208" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="216" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/><line x1="200" y1="150" x2="224" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/></g>
-  <polygon points="200,74 133,192 267,192" fill="none" stroke="#111111" stroke-width="2.4" stroke-linejoin="round"/>
+  <polygon points="200.0,50.0 287.0,204.0 113.0,204.0" fill="#a4a4a4" stroke="#a4a4a4" stroke-width="7" stroke-linejoin="round" transform="translate(10 11)"/>
+  <polygon points="200.0,50.0 287.0,204.0 113.0,204.0" fill="url(#spparty-shell)" stroke="#111111" stroke-width="6.5" stroke-linejoin="round"/>
+  <clipPath id="spparty-in"><polygon points="200,70 128,196 272,196"/></clipPath>
+  <clipPath id="spparty-sclera"><path d="M139 137 Q200 99 261 137 Q200 170 139 137 Z"/></clipPath>
+  <g clip-path="url(#spparty-in)"><line x1="200" y1="148" x2="118.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="125.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="133.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="140.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="148.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="155.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="163.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="170.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="178.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="185.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="193.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="200.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="208.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="215.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="223.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="230.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="238.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="245.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="253.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="260.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="268.0" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="148" x2="275.5" y2="200" stroke="#2a2a2a" stroke-width="1.25"/><line x1="200" y1="62" x2="170" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="175" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="180" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="185" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="190" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="195" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="200" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="205" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="210" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="215" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="220" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="225" y2="120" stroke="#2a2a2a" stroke-width="1"/><line x1="200" y1="62" x2="230" y2="120" stroke="#2a2a2a" stroke-width="1"/></g>
+  <polygon points="200,70 128,196 272,196" fill="none" stroke="#111111" stroke-width="1.8" stroke-linejoin="round"/>
   <!-- the eye that never closes -->
-  <path d="M126 150 Q200 96 274 150 Q200 202 126 150 Z" fill="#ffffff" stroke="#111111" stroke-width="5.5" stroke-linejoin="round"/>
-  <g>
-    <circle cx="192" cy="150" r="23" fill="url(#spparty-iris)" stroke="#0a3317" stroke-width="2.5"/>
-    <circle cx="192" cy="150" r="14.5" fill="none" stroke="#1d6b31" stroke-width="1.2" opacity=".7"/>
-    <circle cx="192" cy="150" r="9.5" fill="#06150b"/>
-    <circle cx="185" cy="143" r="4.8" fill="#ffffff"/>
-    <circle cx="198" cy="157" r="1.8" fill="#ffffff" opacity=".85"/>
+  <g transform="translate(0 8)">
+  <path d="M137 137 Q200 84 263 137 Q200 186 137 137 Z" fill="#111111"/>
+  <path d="M139 137 Q200 99 261 137 Q200 170 139 137 Z" fill="#efefef"/>
+  <g clip-path="url(#spparty-sclera)"><g>
+    <circle cx="187" cy="137" r="20" fill="url(#spparty-iris)" stroke="#0a2e10" stroke-width="2.4"/>
+    <circle cx="187" cy="137" r="13" fill="none" stroke="#1b5e20" stroke-width="1.1" opacity=".8"/>
+    <circle cx="187" cy="137" r="8.2" fill="#070907"/>
+    <circle cx="193" cy="131" r="4" fill="#ffffff"/>
+  </g></g>
+  <path d="M139 137 Q200 172 261 137 Q200 158 139 137 Z" fill="#16241a"/>
   </g>
-  <path d="M126 150 Q200 96 274 150 Q200 116 126 150 Z" fill="#111111"/>
-  <path d="M126 150 Q200 202 274 150 Q200 186 126 150 Z" fill="#111111"/>
 </g>
 <g transform="translate(0 10)"><g>
   <path d="M174 46 L200 -30 L226 46 Z" fill="#a371f7" stroke="#6e40c9" stroke-width="2" stroke-linejoin="round"/>

@@ -11,16 +11,18 @@ const APEX = [200, 50];
 const BASE_L = [113, 204];
 const BASE_R = [287, 204];
 const INK = '#111111';
-const STEEL = '#d3d6d9';
-const SHADOW = 'rgba(0,0,0,.28)';
+const STEEL = '#c9c9c9';
+const STEEL_HI = '#e4e4e4';
+const SHADOW = '#a4a4a4';
+const SHADOW_OFF = [10, 11];
 const HAT_DY = APEX[1] - 40; // hats were drawn for an apex at y=40
 
-// [hip, knee, foot] for the four RIGHT legs (traced from the reference); left legs are mirrored.
+// [hip, knee, foot] for the four RIGHT legs, traced from the reference character; left legs are mirrored.
 const RIGHT_LEGS = [
-  [[223, 103], [254, 12], [362, 44]],
-  [[234, 128], [316, 72], [372, 150]],
-  [[242, 151], [329, 108], [379, 199]],
-  [[247, 175], [338, 194], [345, 293]],
+  [[215, 95], [258, 11], [356, 63]],
+  [[232, 125], [309, 64], [395, 146]],
+  [[240, 155], [334, 127], [383, 218]],
+  [[245, 180], [335, 210], [332, 305]],
 ];
 
 const pt = (p) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`;
@@ -39,15 +41,20 @@ function legPaths(prefix, animated) {
         ? ` style="transform-origin:${hip[0].toFixed(1)}px ${hip[1]}px;animation:${prefix}-leg 1s ease-in-out ${delay}s infinite alternate"`
         : '';
       const line = `${pt(hip)} ${pt(knee)} ${pt(foot)}`;
-      shadow.push(`<polyline${anim} points="${line}" fill="none" stroke="${SHADOW}" stroke-width="13" stroke-linejoin="round"/>`);
-      const rivets = [0.3, 0.62].flatMap((t) => [lerp(hip, knee, t), lerp(knee, foot, t + 0.08)])
-        .map((r) => `<circle cx="${r[0].toFixed(1)}" cy="${r[1].toFixed(1)}" r="1.9" fill="${INK}"/>`).join('');
+      shadow.push(`<polyline${anim} points="${line}" fill="none" stroke="${SHADOW}" stroke-width="12.5" stroke-linejoin="round"/>`);
+      // rivets: a dot roughly every 24px along both segments
+      const dots = (a, b, from, to) => {
+        const n = Math.max(1, Math.floor(Math.hypot(b[0] - a[0], b[1] - a[1]) / 24));
+        return Array.from({ length: n }, (_, k) => lerp(a, b, from + ((to - from) * (k + 0.5)) / n));
+      };
+      const rivets = [...dots(hip, knee, 0.35, 0.92), ...dots(knee, foot, 0.1, 0.9)]
+        .map((r) => `<circle cx="${r[0].toFixed(1)}" cy="${r[1].toFixed(1)}" r="1.8" fill="${INK}"/>`).join('');
       legsOut.push(`<g class="leg"${anim}>
-  <polyline points="${line}" fill="none" stroke="${INK}" stroke-width="13.5" stroke-linejoin="round"/>
-  <polyline points="${pt(hip)} ${pt(knee)} ${pt(footIn)}" fill="none" stroke="${STEEL}" stroke-width="7.5" stroke-linejoin="round"/>
-  <polyline points="${pt(lerp(hip, knee, 0.05))} ${pt(knee)} ${pt(lerp(footIn, knee, 0.05))}" fill="none" stroke="#f7f8f9" stroke-width="1.8" stroke-linejoin="round" transform="translate(-1,-1.5)" opacity=".9"/>
+  <polyline points="${line}" fill="none" stroke="${INK}" stroke-width="12.5" stroke-linejoin="round"/>
+  <polyline points="${pt(hip)} ${pt(knee)} ${pt(footIn)}" fill="none" stroke="${STEEL}" stroke-width="8" stroke-linejoin="round"/>
+  <polyline points="${pt(lerp(hip, knee, 0.04))} ${pt(knee)} ${pt(lerp(footIn, knee, 0.04))}" fill="none" stroke="${STEEL_HI}" stroke-width="2.8" stroke-linejoin="round" transform="translate(-1.2,-1.2)"/>
   ${rivets}
-  <circle cx="${knee[0]}" cy="${knee[1]}" r="6.5" fill="#f4f5f6" stroke="${INK}" stroke-width="3"/>
+  <circle cx="${knee[0]}" cy="${knee[1]}" r="5.2" fill="#ffffff" stroke="${INK}" stroke-width="2.4"/>
 </g>`);
     });
   }
@@ -56,42 +63,52 @@ function legPaths(prefix, animated) {
 
 function legs(prefix, animated) {
   const { shadow, legs: l } = legPaths(prefix, animated);
-  return `<g transform="translate(7 9)">${shadow}</g>\n${l}`;
+  return `<g transform="translate(${SHADOW_OFF[0]} ${SHADOW_OFF[1]})" filter="url(#${prefix}-soft)">${shadow}</g>\n${l}`;
 }
 
 function body(prefix, { blink = false } = {}) {
   const tri = `${pt(APEX)} ${pt(BASE_R)} ${pt(BASE_L)}`;
+  // engraved rays: a fan from under the eye down to the base, and fine lines rising to the apex
   const rays = [];
-  for (let x = 124; x <= 276; x += 9) rays.push(`<line x1="200" y1="150" x2="${x}" y2="200" stroke="#2b2b2b" stroke-width="1.6"/>`);
-  for (let x = 176; x <= 224; x += 8) rays.push(`<line x1="200" y1="150" x2="${x}" y2="60" stroke="#2b2b2b" stroke-width="1.1" opacity=".55"/>`);
+  for (let x = 118; x <= 282; x += 7.5) rays.push(`<line x1="200" y1="148" x2="${x.toFixed(1)}" y2="200" stroke="#2a2a2a" stroke-width="1.25"/>`);
+  for (let x = 170; x <= 230; x += 5) rays.push(`<line x1="200" y1="62" x2="${x}" y2="120" stroke="#2a2a2a" stroke-width="1"/>`);
+  // the eye: almond, thick black upper lid, dark lower band, green iris looking left of centre
+  const EYE = 'M137 137 Q200 84 263 137 Q200 186 137 137 Z';
+  const SCLERA = 'M139 137 Q200 99 261 137 Q200 170 139 137 Z';
   const look = blink
-    ? `<animateTransform attributeName="transform" type="translate" values="0 0;0 0;10 1;10 1;-3 -1;-3 -1;0 0" keyTimes="0;.3;.38;.6;.68;.9;1" dur="7s" repeatCount="indefinite"/>`
+    ? `<animateTransform attributeName="transform" type="translate" values="0 0;0 0;12 0;12 0;-6 1;-6 1;0 0" keyTimes="0;.3;.38;.6;.68;.9;1" dur="7s" repeatCount="indefinite"/>`
     : '';
   return `
 <g class="body">
-  <polygon points="${tri}" fill="${SHADOW}" transform="translate(7 9)" stroke="${SHADOW}" stroke-width="7" stroke-linejoin="round"/>
-  <polygon points="${tri}" fill="#eceeef" stroke="${INK}" stroke-width="8" stroke-linejoin="round"/>
-  <clipPath id="${prefix}-in"><polygon points="200,74 133,192 267,192"/></clipPath>
+  <polygon points="${tri}" fill="${SHADOW}" stroke="${SHADOW}" stroke-width="7" stroke-linejoin="round" transform="translate(${SHADOW_OFF[0]} ${SHADOW_OFF[1]})"/>
+  <polygon points="${tri}" fill="url(#${prefix}-shell)" stroke="${INK}" stroke-width="6.5" stroke-linejoin="round"/>
+  <clipPath id="${prefix}-in"><polygon points="200,70 128,196 272,196"/></clipPath>
+  <clipPath id="${prefix}-sclera"><path d="${SCLERA}"/></clipPath>
   <g clip-path="url(#${prefix}-in)">${rays.join('')}</g>
-  <polygon points="200,74 133,192 267,192" fill="none" stroke="${INK}" stroke-width="2.4" stroke-linejoin="round"/>
+  <polygon points="200,70 128,196 272,196" fill="none" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/>
   <!-- the eye that never closes -->
-  <path d="M126 150 Q200 96 274 150 Q200 202 126 150 Z" fill="#ffffff" stroke="${INK}" stroke-width="5.5" stroke-linejoin="round"/>
-  <g>${look}
-    <circle cx="192" cy="150" r="23" fill="url(#${prefix}-iris)" stroke="#0a3317" stroke-width="2.5"/>
-    <circle cx="192" cy="150" r="14.5" fill="none" stroke="#1d6b31" stroke-width="1.2" opacity=".7"/>
-    <circle cx="192" cy="150" r="9.5" fill="#06150b"/>
-    <circle cx="185" cy="143" r="4.8" fill="#ffffff"/>
-    <circle cx="198" cy="157" r="1.8" fill="#ffffff" opacity=".85"/>
+  <g transform="translate(0 8)">
+  <path d="${EYE}" fill="${INK}"/>
+  <path d="${SCLERA}" fill="#efefef"/>
+  <g clip-path="url(#${prefix}-sclera)"><g>${look}
+    <circle cx="187" cy="137" r="20" fill="url(#${prefix}-iris)" stroke="#0a2e10" stroke-width="2.4"/>
+    <circle cx="187" cy="137" r="13" fill="none" stroke="#1b5e20" stroke-width="1.1" opacity=".8"/>
+    <circle cx="187" cy="137" r="8.2" fill="#070907"/>
+    <circle cx="193" cy="131" r="4" fill="#ffffff"/>
+  </g></g>
+  <path d="M139 137 Q200 172 261 137 Q200 158 139 137 Z" fill="#16241a"/>
   </g>
-  <path d="M126 150 Q200 96 274 150 Q200 116 126 150 Z" fill="${INK}"/>
-  <path d="M126 150 Q200 202 274 150 Q200 186 126 150 Z" fill="${INK}"/>
 </g>`;
 }
 
 function defs(prefix) {
   return `<defs>
-  <radialGradient id="${prefix}-iris" cx=".38" cy=".35" r=".75">
-    <stop offset="0" stop-color="#9fe6a0"/><stop offset=".45" stop-color="#3fae55"/><stop offset="1" stop-color="#145a27"/>
+  <linearGradient id="${prefix}-shell" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#e6e6e6"/><stop offset="1" stop-color="#cbcbcb"/>
+  </linearGradient>
+  <filter id="${prefix}-soft" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.1"/></filter>
+  <radialGradient id="${prefix}-iris" cx=".62" cy=".32" r=".8">
+    <stop offset="0" stop-color="#7fcf7f"/><stop offset=".5" stop-color="#2f8a3b"/><stop offset="1" stop-color="#0f3d14"/>
   </radialGradient>
 </defs>`;
 }
@@ -208,7 +225,7 @@ const HATS = {
  */
 function spider({ hat = 'none', animated = false, bg = 'none', id = 'pv', label = true } = {}) {
   const h = HATS[hat] || HATS.none;
-  const top = hat === 'none' ? -2 : -50;
+  const top = hat === 'none' ? -14 : -50;
   const height = H - top + (label ? 40 : 6);
   const anim = animated
     ? `<style>@keyframes ${id}-leg{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}@keyframes ${id}-bob{from{transform:translateY(0)}to{transform:translateY(-6px)}}.${id}-all{animation:${id}-bob 1.6s ease-in-out infinite alternate}</style>`
